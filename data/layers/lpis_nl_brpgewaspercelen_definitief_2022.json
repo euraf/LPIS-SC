@@ -1,0 +1,37 @@
+{
+  "_comment": [
+    "Regen Farmer LPIS vector tiles dataset NL_brpgewaspercelen_definitief_2022.",
+    "TileJSON metadata available at https://lpis.regenfarmer.com/api/tilesets/NL_brpgewaspercelen_definitief_2022",
+    "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
+  ],
+  "id": "lpis_nl_brpgewaspercelen_definitief_2022",
+  "name": "NL Parcels 2022",
+  "name_en": "NL Parcels 2022",
+  "country_code": "NL",
+  "attributions": "Source: Regen Farmer LPIS API",
+  "type": "MVT",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "minZoom": 10,
+  "zIndex": 1,
+  "opacity": 0.9,
+  "layer_name": "NL_brpgewaspercelen_definitief_2022",
+  "layer_projection": "EPSG:4326",
+  "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
+  "needs_loader": false,
+  "feature_infos": {
+    "feature_identifier": { "name": "Parcel ID", "key": "id" },
+    "feature_landuse": { "name": "Crop", "key": "gewas" },
+    "others": [
+      { "name": "Category", "key": "category" },
+      { "name": "Crop code", "key": "gewascode" },
+      { "name": "Year", "key": "jaar" }
+    ]
+  },
+  "layer_style": {
+    "selected_fill_color": "yellow",
+    "selected_stroke_color": "black",
+    "stroke_color": "black"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "_comment": [
+    "Regen Farmer LPIS vector tiles dataset DE_Brandenburg_2025.",
+    "TileJSON metadata available at https://lpis.regenfarmer.com/api/tilesets/DE_Brandenburg_2025",
+    "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
+  ],
+  "id": "lpis_de_brandenburg_2025",
+  "name": "DE Brandenburg Parcels 2025",
+  "name_en": "DE Brandenburg Parcels 2025",
+  "country_code": "DE",
+  "attributions": "Source: Regen Farmer LPIS API",
+  "type": "MVT",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "minZoom": 10,
+  "zIndex": 1,
+  "opacity": 0.9,
+  "layer_name": "DE_Brandenburg_2025",
+  "layer_projection": "EPSG:4326",
+  "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
+  "needs_loader": false,
+  "feature_infos": {
+    "feature_identifier": { "name": "Field block ID", "key": "FB_ID" },
+    "feature_landuse": { "name": "Category", "key": "HBN_KAT" },
+    "others": [
+      { "name": "Gross area", "key": "FL_BRUTTO_" },
+      { "name": "Net area", "key": "FL_NETTO_H" },
+      { "name": "Year", "key": "FGUE_JAHR" }
+    ]
+  },
+  "layer_style": {
+    "selected_fill_color": "yellow",
+    "selected_stroke_color": "black",
+    "stroke_color": "black"
+  }
+}

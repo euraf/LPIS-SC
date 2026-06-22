@@ -1,0 +1,38 @@
+{
+  "_comment": [
+    "Woody vegetation layer 2021 (raster 5 m) - Copernicus Land Monitoring Service. General information available at https://doi.org/10.2909/7fba3498-71d1-45bc-a76e-0ca4a237b21c and https://land.copernicus.eu/en/products/high-resolution-layer-small-landscape-features/woody-vegetation-layer-2021",
+    "Full metadata available at https://sdi.eea.europa.eu/catalogue/srv/api/records/7fba3498-71d1-45bc-a76e-0ca4a237b21c/formatters/xsl-view?output=pdf&language=eng&approved=true",
+    "WMS service at https://copernicus.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_WoodyVegetationLayer_2021_005m/ImageServer/WMSServer?request=GetCapabilities&service=WMS",
+    "Woody Vegetation Layer is a new product that aims at mapping all woody vegetation (with the exception of vineyards), including isolated trees or permanent crops such as orchards. Depending on the size and coverage density, such trees may be heterogeneously mapped within the WVL and therefore from the HRL SLF 2021 product suite. Small, isolated trees can be missed if their respective crowns are below 5m width (spatial resolution of the WVL).Orchards constituted of small and densely planted trees (frequent in western Europe) can also be missing as their spectral and textural signatures on VHR imagery can confuse them with vineyards or other crops. Higher spatial resolution imagery or time-series of VHR may be required to accurately and consistently map those features."
+  ],
+  "id": "woody_vegetation_layer_2021",
+  "name": "Woody vegetation layer 2021",
+  "name_en": "Woody vegetation layer 2021",
+  "attributions": "Woody vegetation layer 2021 (raster 5 m) - Copernicus Land Monitoring Service https://doi.org/10.2909/7fba3498-71d1-45bc-a76e-0ca4a237b21c",
+  "type": "WMS",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "zIndex": 4,
+  "opacity": 0.9,
+  "layer_groups": ["copernicus"],
+  "layer_name": "HRL_WoodyVegetationLayer_2021_005m",
+  "layer_projection": "EPSG:3035",
+  "layer_origin_x": 900000.0,
+  "layer_origin_y": 5500000.0,
+  "layer_resolution": 5,
+  "source_url": "https://copernicus.discomap.eea.europa.eu/arcgis/services/GioLandPublic/[layer_name]/ImageServer/WMSServer?SERVICE=WMS&VERSION=1.3.0&LAYERS=[layer_name]",
+  "feature_infos": {
+    "feature_identifier": { "name": "Woody areas", "key": "PALETTE_INDEX" }
+  },
+  "feature_info_format": "text/xml",
+  "feature_info_query": "HRL_WoodyVegetationLayer_2021_005m",
+  "layer_legend": {
+    "legend_identifier": { "key": "PALETTE_INDEX" },
+    "legend_text": "label_en",
+    "legend_elements": {
+      "0": { "color": null, "label_en": "Non-woody areas" },
+      "1": { "color": "#75dd00", "label_en": "Woody areas" }
+    }
+  }
+}
