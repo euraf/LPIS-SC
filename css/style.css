@@ -1031,6 +1031,156 @@ body {
   overflow: hidden;
 }
 
+@media (max-width: 599px) {
+  .compass-ui-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .compass-branding {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .compass-title-select-shell {
+    width: 100%;
+  }
+
+  .compass-title-select {
+    width: 100%;
+  }
+
+  .compass-top-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .farmer-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: 0;
+  }
+
+  .farm-left-panel {
+    flex: 0 1 40%;
+    min-height: 0;
+    border-right: 0;
+  }
+
+  .farm-map-stage {
+    flex: 0 0 auto;
+    height: 35dvh;
+    max-height: 35dvh;
+  }
+
+  .farm-right-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    border-top: 1px solid rgba(25, 25, 112, 0.08);
+    overflow: auto;
+  }
+
+  .farmer-layout.policy-layout .policy-insights-panel {
+    order: 3;
+  }
+
+  .farmer-layout.policy-layout .farm-map-stage {
+    order: 2;
+  }
+
+  .farmer-layout.policy-layout .farm-left-panel {
+    order: 1;
+  }
+
+  .basemap-switcher {
+    top: 0.35rem;
+    right: 0.35rem;
+    gap: 0.25rem;
+    padding: 0.25rem 0.35rem;
+  }
+
+  .basemap-switcher label {
+    display: none;
+  }
+
+  .basemap-switcher select,
+  .basemap-switcher .attribution-toggle-btn {
+    min-height: 1.45rem;
+    font-size: 0.65rem;
+    padding: 0 0.35rem;
+  }
+
+  .basemap-switcher select {
+    padding: 0 1.2rem 0 0.3rem;
+    background-position: calc(100% - 10px) 50%, calc(100% - 6px) 50%;
+  }
+
+  .basemap-switcher .attribution-toggle-btn {
+    padding: 0 0.3rem;
+    white-space: nowrap;
+  }
+
+  .map-zoom-badge {
+    left: 0.35rem;
+    bottom: 1.8rem;
+    min-height: 1.35rem;
+    padding: 0 0.4rem;
+    font-size: 0.62rem;
+  }
+
+  #compass-map .ol-zoom {
+    top: 0.35rem;
+    left: 0.35rem;
+  }
+
+  #compass-map .ol-custom-locate {
+    top: 3.2rem;
+    left: 0.35rem;
+  }
+
+  #compass-map #gcd-container {
+    top: 5.7rem;
+    left: 0.35rem;
+  }
+
+  .insight-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .lulc-parcel-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .panel-title-row {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .layer-group li {
+    grid-template-columns: 0.6rem 1fr 1.5rem;
+    gap: 0.35rem;
+    min-height: 1.55rem;
+    font-size: 0.7rem;
+  }
+
+  .tour-button {
+    min-height: 1.85rem;
+    font-size: 0.68rem;
+  }
+
+  .header-link-button {
+    min-height: 1.85rem;
+    font-size: 0.68rem;
+    padding: 0 0.5rem;
+  }
+}
+
 .basemap-switcher {
   position: absolute;
   top: 0.5rem;
@@ -1337,6 +1487,8 @@ body {
   flex-direction: column;
   gap: 0.35rem;
   margin-top: 0.6rem;
+  overflow: auto;
+  min-height: 0;
 }
 
 .accordion-section {

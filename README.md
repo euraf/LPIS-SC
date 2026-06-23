@@ -38,7 +38,7 @@ All data is accessed dynamically through web services (WFS/WMS/XYZ tiles) and is
 
 The tool is available online:
 
-https://mvagroecology.github.io/lucim
+https://euraf.github.io/LPIS-SC/
 
 ## Contributing
 
