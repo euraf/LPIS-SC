@@ -1,0 +1,65 @@
+{
+  "_comment": [
+    "Spanish SIGPAC LPIS data published by FEGA via OGC API - Features.",
+    "Collection: elementos_paisaje_area",
+    "API root: https://sigpac-hubcloud.es/ogcapi"
+  ],
+  "id": "lpis_es_elementos_paisaje_area",
+  "name": "LPIS ES - Elementos del Paisaje (Area)",
+  "name_en": "LPIS ES - Landscape Elements (Area)",
+  "attributions": "Source: FEGA SIGPAC OGC API",
+  "country_code": "ES",
+  "type": "WFS",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "minZoom": 12,
+  "zIndex": 3,
+  "opacity": 0.9,
+  "layer_name": "sigpac",
+  "layer_name_detail": "elementos_paisaje_area",
+  "layer_projection": "EPSG:4326",
+  "needs_loader": false,
+  "source_url": "https://sigpac-hubcloud.es/ogcapi/collections/elementos_paisaje_area/items?f=json&bbox=[extent]&limit=10000",
+  "feature_infos": {
+    "feature_identifier": {
+      "name": "Feature ID",
+      "key": "dn_pk"
+    },
+    "feature_landuse": {
+      "name": "Element type",
+      "key": "tipo_elemento"
+    },
+    "others": [
+      {
+        "name": "Province",
+        "key": "provincia"
+      },
+      {
+        "name": "Municipality",
+        "key": "municipio"
+      },
+      {
+        "name": "OID",
+        "key": "dn_oid"
+      }
+    ]
+  },
+  "layer_legend": {
+    "legend_identifier": "tipo_elemento",
+    "legend_text": "label_en",
+    "legend_elements": {
+      "_default": {
+        "label": "Landscape element (area)",
+        "label_en": "Landscape element (area)",
+        "color": "#4CAF50"
+      }
+    }
+  },
+  "layer_style": {
+    "selected_fill_color": "yellow",
+    "selected_stroke_color": "black",
+    "stroke_color": "black",
+    "fill_color": "#4CAF5080"
+  }
+}

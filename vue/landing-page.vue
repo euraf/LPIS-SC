@@ -157,6 +157,7 @@
 						<a class="country-pill" href="#" @click.prevent="openCountryCompass('IE')"><span class="flag flag-ie"></span> Ireland</a>
 						<a class="country-pill" href="#" @click.prevent="openCountryCompass('NL')"><span class="flag flag-nl"></span> Netherlands</a>
 						<a class="country-pill" href="#" @click.prevent="openCountryCompass('PT')"><span class="flag flag-pt"></span> Portugal</a>
+						<a class="country-pill" href="#" @click.prevent="openCountryCompass('ES')"><span class="flag flag-es"></span> Spain</a>
 					</div>
 				</section>
 
@@ -306,6 +307,7 @@ module.exports = {
 				IE: { lon: -8.0, lat: 53.4, zoom: 7 },
 				NL: { lon: 5.29, lat: 52.13, zoom: 8 },
 				PT: { lon: -8.42, lat: 39.5, zoom: 7 },
+				ES: { lon: -3.7, lat: 40.4, zoom: 6 },
 			};
 
 			const target = countryTargets[countryCode];

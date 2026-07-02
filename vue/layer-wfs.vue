@@ -83,6 +83,12 @@ module.exports = {
             var _this = this
             return function(feature) {
 
+                var legendKey = feature.get(_this.layer_legend.legend_identifier)
+                var legendElement = _this.layer_legend && _this.layer_legend.legend_elements
+                    ? _this.layer_legend.legend_elements[legendKey]
+                    : null
+                var fallbackFillColor = _this.layer_style.fill_color || '#FFFFFF66'
+
                 var isSelected = Array.isArray(_this.selectedFeatures) &&
                 _this.selectedFeatures.some(f =>
                     f.id === feature.get(_this.feature_identifier_key)
@@ -95,14 +101,28 @@ module.exports = {
                     width: 0.5,
                 })
                 var fill_style = new ol.style.Fill({
-                    color: isSelected ? _this.layer_style.selected_fill_color : _this.layer_legend.legend_elements[feature.get(_this.layer_legend.legend_identifier)]?.color,
+                    color: isSelected
+                        ? _this.layer_style.selected_fill_color
+                        : (legendElement
+                            ? legendElement.color
+                            : fallbackFillColor),
                 })
+                var geomType = feature.getGeometry() ? feature.getGeometry().getType() : null
+                var pointImageStyle = (geomType === 'Point' || geomType === 'MultiPoint')
+                    ? new ol.style.Circle({
+                        radius: 4,
+                        fill: fill_style,
+                        stroke: stroke_style,
+                    })
+                    : null
 
                 return new ol.style.Style({
 
                     stroke: stroke_style,
 
                     fill: fill_style,
+
+                    image: pointImageStyle,
                     
                     text: zoom > 14 ? new ol.style.Text({
                         text: String(feature.get(_this.feature_identifier_key) ?? ''),
@@ -316,7 +336,8 @@ module.exports = {
             return f.get(prop)
         },
         generateLegendKey(f) {
-            return f.get(this.layer_legend.legend_identifier).toString()
+            const legendValue = f.get(this.layer_legend.legend_identifier)
+            return legendValue == null ? '_undefined_' : legendValue.toString()
         }
     }
 }

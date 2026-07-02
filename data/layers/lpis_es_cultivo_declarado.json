@@ -1,0 +1,80 @@
+{
+  "_comment": [
+    "Spanish SIGPAC LPIS data published by FEGA via OGC API - Features.",
+    "Landing page: https://sigpac-hubcloud.es/ogcapi",
+    "Collections endpoint: https://sigpac-hubcloud.es/ogcapi/collections?f=json",
+    "Using collection cultivo_declarado for declared crop information."
+  ],
+  "id": "lpis_es_cultivo_declarado",
+  "name": "LPIS ES - Cultivo Declarado",
+  "name_en": "LPIS ES - Declared Crop",
+  "attributions": "Source: FEGA SIGPAC OGC API",
+  "country_code": "ES",
+  "type": "WFS",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "minZoom": 12,
+  "zIndex": 2,
+  "opacity": 0.9,
+  "layer_name": "sigpac",
+  "layer_name_detail": "cultivo_declarado",
+  "layer_projection": "EPSG:4326",
+  "needs_loader": false,
+  "source_url": "https://sigpac-hubcloud.es/ogcapi/collections/cultivo_declarado/items?f=json&bbox=[extent]&limit=10000",
+  "feature_infos": {
+    "feature_identifier": {
+      "name": "Feature ID",
+      "key": "dn_pk"
+    },
+    "feature_area": {
+      "name": "Declared area",
+      "key": "parc_supcult",
+      "unit": "square_m"
+    },
+    "feature_landuse": {
+      "name": "Declared crop",
+      "keys": ["parc_producto", "tipo_aprovecha"],
+      "transform": "concatenate"
+    },
+    "others": [
+      {
+        "name": "Province",
+        "key": "provincia"
+      },
+      {
+        "name": "Municipality",
+        "key": "municipio"
+      },
+      {
+        "name": "Polygon",
+        "key": "poligono"
+      },
+      {
+        "name": "Parcel",
+        "key": "parcela"
+      },
+      {
+        "name": "Recinto",
+        "key": "recinto"
+      }
+    ]
+  },
+  "layer_legend": {
+    "legend_identifier": "tipo_aprovecha",
+    "legend_text": "label_en",
+    "legend_elements": {
+      "_default": {
+        "label": "Cultivo declarado",
+        "label_en": "Declared crop",
+        "color": "#F2B96B"
+      }
+    }
+  },
+  "layer_style": {
+    "selected_fill_color": "yellow",
+    "selected_stroke_color": "black",
+    "stroke_color": "black",
+    "fill_color": "#F2B96B80"
+  }
+}
