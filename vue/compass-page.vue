@@ -21,7 +21,7 @@
 					</label>
 				</div>
 				<div class="compass-top-actions">
-					<button class="tour-button" type="button">Guided Tour</button>
+					<!--button class="tour-button" type="button">Guided Tour</button-->
 					<div class="compass-menu-links">
 						<a class="header-link-button" href="#" @click.prevent="goToLandingSection('about')">About</a>
 						<a
