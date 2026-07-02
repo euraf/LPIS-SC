@@ -371,7 +371,7 @@
 					Latest improvements
 				</a>
 				<p class="compass-funding-note">
-					This tool is developed with support from the DigitAF project funding framework.
+					This tool was developed under the EU project <a href="https://digitaf.eu/" target="_blank">DigitAF</a> (Grant Agreement N° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
 				</p>
 			</footer>
 		</div>

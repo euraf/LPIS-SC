@@ -102,3 +102,5 @@ img/templates
 img/templates/*
 TASKS.md
 skills-lock.json
+docs
+docs/*
