@@ -1,6 +1,8 @@
 var LAYERS_LIST = [
   "esri_world_imagery",
   "osm",
+  "pnoa_es_orthoimagecoverage_ma",
+  "ortosat_pt_2023_corverdadeira",
   "lpis_pt_parcelas_2024",
   "lpis_pt_ocupacaosolo_2024",
   "lpis_es_recintos",

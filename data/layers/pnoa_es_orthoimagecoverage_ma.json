@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "PNOA (Plan Nacional de Ortofotografia Aerea) maxima actualidad (MA). Metadata reference: https://portalrediam.cica.es/geonetwork/srv/api/records/spaignwms_ortoimagenes",
+    "WMS endpoint: https://www.ign.es/wms-inspire/pnoa-ma",
+    "Layer: OI.OrthoimageCoverage (full Spain coverage; orthophoto at finer scales, Sentinel-2 fallback at smaller scales)."
+  ],
+  "id": "pnoa_es_orthoimagecoverage_ma",
+  "name": "PNOA ES - Ortoimagen MA",
+  "name_en": "PNOA ES - Orthoimage MA",
+  "attributions": "Source: IGN/CNIG - Plan Nacional de Ortofotografia Aerea (PNOA)",
+  "country_code": "ES",
+  "type": "WMS",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "minZoom": 0,
+  "zIndex": 0,
+  "opacity": 1,
+  "layer_groups": ["orthophoto"],
+  "layer_name": "pnoa-ma",
+  "layer_name_detail": "OI.OrthoimageCoverage",
+  "layer_projection": "EPSG:3857",
+  "source_url": "https://www.ign.es/wms-inspire/[layer_name]?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=[layer_name_detail]&STYLES=&FORMAT=image/jpeg&TRANSPARENT=false",
+  "feature_infos": {
+    "feature_identifier": { "name": "Layer", "key": "layer" }
+  },
+  "feature_info_format": "text/plain",
+  "feature_info_query": "OI.OrthoimageCoverage",
+  "layer_legend": {
+    "legend_identifier": "_default",
+    "legend_text": "label_en",
+    "legend_elements": {
+      "_default": {
+        "label": "Ortoimagen",
+        "label_en": "Orthoimage",
+        "color": "#4d88cf"
+      }
+    }
+  },
+  "layer_style": {
+    "selected_fill_color": "yellow",
+    "selected_stroke_color": "black",
+    "stroke_color": "black"
+  }
+}

@@ -40,60 +40,135 @@
 						<h3>Data Layers</h3>
 						<span>{{ profileTitle }} Mode</span>
 					</div>
-					<div class="layer-group" v-if="Object.keys(lpisLayers).length">
-						<h4>LPIS Layers</h4>
-						<ul>
-							<li v-for="layer in lpisLayers" :key="layer.id">
-								<span class="layer-dot" style="background-color: #86d94c"></span>
-								<component :is="layer.type === 'MVT' ? 'layer-mvt' : 'layer-wfs'" :layer_id="layer.id" :layer_props="layer"></component>
-							</li>
-						</ul>
-					</div>
-					<div class="layer-group">
-						<h4>Indicator Layers</h4>
-						<ul>
-							<li v-if="layers['tree_cover_density_2021']">
-								<span class="layer-dot" style="background-color: #4fae4e"></span>
-								<layer-wms :layer_id="'tree_cover_density_2021'" :layer_props="layers['tree_cover_density_2021']"></layer-wms>
-							</li>
-							<li v-if="layers['jrc_gfc_2020_v2']">
-								<span class="layer-dot" style="background-color: #2f6f2f"></span>
-								<layer-wms :layer_id="'jrc_gfc_2020_v2'" :layer_props="layers['jrc_gfc_2020_v2']"></layer-wms>
-							</li>
-							<li v-if="layers['woody_vegetation_layer_2021']">
-								<span class="layer-dot" style="background-color: #75dd00"></span>
-								<layer-wms :layer_id="'woody_vegetation_layer_2021'" :layer_props="layers['woody_vegetation_layer_2021']"></layer-wms>
-							</li>
-							<li v-if="layers['small_woody_features_2021']">
-								<span class="layer-dot" style="background-color: #d7f500"></span>
-								<layer-wms :layer_id="'small_woody_features_2021'" :layer_props="layers['small_woody_features_2021']"></layer-wms>
-							</li>
-							<li v-if="layers['clc_2018']">
-								<span class="layer-dot" style="background-color: #e31a1c"></span>
-								<layer-wms :layer_id="'clc_2018'" :layer_props="layers['clc_2018']"></layer-wms>
-							</li>
-						</ul>
-					</div>
-					<div class="layer-group">
-						<h4>Administrative Layers</h4>
-						<ul>
-							<li>
-								<span class="layer-dot" style="background-color: rgba(50,50,50,0.9)"></span>
-								<span class="layer-label">NUTS1 <small>(zoom ≥ 5)</small></span>
-							</li>
-							<li>
-								<span class="layer-dot" style="background-color: rgba(60,60,60,0.75)"></span>
-								<span class="layer-label">NUTS2 <small>(zoom ≥ 7)</small></span>
-							</li>
-							<li>
-								<span class="layer-dot" style="background-color: rgba(80,80,80,0.6)"></span>
-								<span class="layer-label">NUTS3 <small>(zoom ≥ 9)</small></span>
-							</li>
-							<li>
-								<span class="layer-dot" style="background-color: rgba(100,100,100,0.5)"></span>
-								<span class="layer-label">LAU <small>(zoom ≥ 11)</small></span>
-							</li>
-						</ul>
+					<div class="indicator-accordion layer-accordion">
+						<div
+							class="accordion-section"
+							v-if="Object.keys(lpisLayers).length"
+							:class="{ 'is-open': leftLayerAccordion.lpis }"
+						>
+							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('lpis')">
+								<span class="accordion-icon">🌾</span>
+								<span class="accordion-title">LPIS Layers</span>
+								<span class="accordion-chevron">
+									<i class="fa fa-chevron-down"></i>
+								</span>
+							</button>
+							<div class="accordion-body">
+								<div class="layer-group layer-group--accordion">
+									<ul>
+										<li v-for="layer in lpisLayers" :key="layer.id">
+											<span class="layer-dot" style="background-color: #86d94c"></span>
+											<component :is="layer.type === 'MVT' ? 'layer-mvt' : 'layer-wfs'" :layer_id="layer.id" :layer_props="layer"></component>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.indicator }">
+							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('indicator')">
+								<span class="accordion-icon">📊</span>
+								<span class="accordion-title">Indicator Layers</span>
+								<span class="accordion-chevron">
+									<i class="fa fa-chevron-down"></i>
+								</span>
+							</button>
+							<div class="accordion-body">
+								<div class="layer-group layer-group--accordion">
+									<ul>
+										<li v-if="layers['tree_cover_density_2021']">
+											<span class="layer-dot" style="background-color: #4fae4e"></span>
+											<layer-wms :layer_id="'tree_cover_density_2021'" :layer_props="layers['tree_cover_density_2021']"></layer-wms>
+										</li>
+										<li v-if="layers['jrc_gfc_2020_v2']">
+											<span class="layer-dot" style="background-color: #2f6f2f"></span>
+											<layer-wms :layer_id="'jrc_gfc_2020_v2'" :layer_props="layers['jrc_gfc_2020_v2']"></layer-wms>
+										</li>
+										<li v-if="layers['woody_vegetation_layer_2021']">
+											<span class="layer-dot" style="background-color: #75dd00"></span>
+											<layer-wms :layer_id="'woody_vegetation_layer_2021'" :layer_props="layers['woody_vegetation_layer_2021']"></layer-wms>
+										</li>
+										<li v-if="layers['small_woody_features_2021']">
+											<span class="layer-dot" style="background-color: #d7f500"></span>
+											<layer-wms :layer_id="'small_woody_features_2021'" :layer_props="layers['small_woody_features_2021']"></layer-wms>
+										</li>
+										<li v-if="layers['clc_2018']">
+											<span class="layer-dot" style="background-color: #e31a1c"></span>
+											<layer-wms :layer_id="'clc_2018'" :layer_props="layers['clc_2018']"></layer-wms>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.administrative }">
+							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('administrative')">
+								<span class="accordion-icon">🧭</span>
+								<span class="accordion-title">Administrative Layers</span>
+								<span class="accordion-chevron">
+									<i class="fa fa-chevron-down"></i>
+								</span>
+							</button>
+							<div class="accordion-body">
+								<div class="layer-group layer-group--accordion">
+									<ul>
+										<li>
+											<span class="layer-dot" style="background-color: rgba(50,50,50,0.9)"></span>
+											<span class="layer-label">NUTS1 <small>(zoom ≥ 5)</small></span>
+										</li>
+										<li>
+											<span class="layer-dot" style="background-color: rgba(60,60,60,0.75)"></span>
+											<span class="layer-label">NUTS2 <small>(zoom ≥ 7)</small></span>
+										</li>
+										<li>
+											<span class="layer-dot" style="background-color: rgba(80,80,80,0.6)"></span>
+											<span class="layer-label">NUTS3 <small>(zoom ≥ 9)</small></span>
+										</li>
+										<li>
+											<span class="layer-dot" style="background-color: rgba(100,100,100,0.5)"></span>
+											<span class="layer-label">LAU <small>(zoom ≥ 11)</small></span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.orthophoto }">
+							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('orthophoto')">
+								<span class="accordion-icon">🛰️</span>
+								<span class="accordion-title">Orthophoto Layers</span>
+								<span class="accordion-chevron">
+									<i class="fa fa-chevron-down"></i>
+								</span>
+							</button>
+							<div class="accordion-body">
+								<div class="layer-group layer-group--accordion">
+									<ul>
+										<li v-for="layer in orthophotoLayers" :key="layer.id">
+											<span class="layer-dot" :style="{ backgroundColor: layer.layer_legend?.legend_elements?._default?.color || '#6fa8dc' }"></span>
+											<component
+												:is="layer.type === 'tileXYZ' ? 'layer-tilexyz' : 'layer-wms'"
+												:layer_id="layer.id"
+												:layer_props="layer"
+											></component>
+										</li>
+										<li>
+											<span class="layer-dot" style="background-color: #5168b8"></span>
+											<div class="form-check">
+												<input
+													id="orthophoto-world-imagery"
+													class="form-check-input"
+													type="checkbox"
+													:checked="activeBasemap === 'imagery'"
+													@change="setOrthophotoBasemap($event.target.checked)"
+												>
+												<label class="form-check-label" for="orthophoto-world-imagery">World Imagery (Esri)</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
 				</aside>
 				<aside class="farm-right-panel policy-insights-panel" v-if="isPolicyMaker">
@@ -367,9 +442,9 @@
 			</section>
 
 			<footer class="compass-footer-note">
-				<a class="footer-latest-button" href="#" @click.prevent="goToLandingSection('latest-improvements')">
+				<!--a class="footer-latest-button" href="#" @click.prevent="goToLandingSection('latest-improvements')">
 					Latest improvements
-				</a>
+				</a-->
 				<p class="compass-funding-note">
 					This tool was developed under the EU project <a href="https://digitaf.eu/" target="_blank">DigitAF</a> (Grant Agreement N° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
 				</p>
@@ -467,6 +542,12 @@ module.exports = {
                     layers: [ 'woody_vegetation_layer_2021', 'small_woody_features_2021' ]
 				},
 			],
+			leftLayerAccordion: {
+				lpis: true,
+				indicator: true,
+				administrative: false,
+				orthophoto: false,
+			},
         }
     },
     created() {
@@ -793,6 +874,21 @@ module.exports = {
 				if (!['WFS', 'MVT'].includes(x.type) || !x.country_code) return false;
 				if (_this.visibleCountries.includes(x.country_code)) return true;
 				// hide the layer if it was visible but country is no longer in view
+				if (x.show) {
+					VueBus.$emit('updateLayerVisibility', x.id, false);
+					x.show = false;
+				}
+				return false;
+			});
+		},
+		orthophotoLayers() {
+			if (!this.map || !this.countriesLayer || !this.visibleCountries.length) {
+				return {};
+			}
+			const _this = this;
+			return Object.filter(this.layers, function(x) {
+				if (!x.country_code || !Array.isArray(x.layer_groups) || !x.layer_groups.includes('orthophoto')) return false;
+				if (_this.visibleCountries.includes(x.country_code)) return true;
 				if (x.show) {
 					VueBus.$emit('updateLayerVisibility', x.id, false);
 					x.show = false;
@@ -1983,6 +2079,15 @@ module.exports = {
 				}
 			});
 			return intersects;
+		},
+		toggleLeftLayerAccordion(section) {
+			if (!Object.prototype.hasOwnProperty.call(this.leftLayerAccordion, section)) {
+				return;
+			}
+			this.$set(this.leftLayerAccordion, section, !this.leftLayerAccordion[section]);
+		},
+		setOrthophotoBasemap(enabled) {
+			this.applyBasemap(enabled ? 'imagery' : 'osm');
 		},
         toggleCategory(id) {
 			const cat = this.indicatorCategories.find((c) => c.id === id);

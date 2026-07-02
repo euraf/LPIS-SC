@@ -1824,6 +1824,10 @@ body {
   min-height: 0;
 }
 
+.layer-accordion {
+  margin-top: 0.6rem;
+}
+
 .accordion-section {
   border: 1px solid rgba(25, 25, 112, 0.1);
   border-radius: 8px;

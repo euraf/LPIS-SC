@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "OrtoSat 30 cm - Portugal Continental 2023 (Direcao-Geral do Territorio). Metadata: https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/b2a1ca02-779b-4189-b895-85d10fff610f",
+    "WMS capabilities: https://ortos.dgterritorio.gov.pt/wms/ortosat2023?service=WMS&request=GetCapabilities&version=1.3.0",
+    "Layer name in WMS: ortoSat2023-CorVerdadeira"
+  ],
+  "id": "ortosat_pt_2023_corverdadeira",
+  "name": "OrtoSat PT 2023 - Cor Verdadeira",
+  "name_en": "OrtoSat PT 2023 - True Color",
+  "attributions": "Informacao geografica cedida pela Direcao-Geral do Territorio",
+  "country_code": "PT",
+  "type": "WMS",
+  "show": false,
+  "disabled": false,
+  "baselayer": false,
+  "minZoom": 8,
+  "zIndex": 0,
+  "opacity": 1,
+  "layer_groups": ["orthophoto"],
+  "layer_name": "OrtoSat2023",
+  "layer_name_detail": "ortoSat2023-CorVerdadeira",
+  "layer_projection": "EPSG:3857",
+  "source_url": "https://ortos.dgterritorio.gov.pt/wms/ortosat2023?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=[layer_name_detail]&STYLES=&FORMAT=image/jpeg&TRANSPARENT=false",
+  "feature_infos": {
+    "feature_identifier": { "name": "Layer", "key": "layer" }
+  },
+  "feature_info_format": "text/plain",
+  "feature_info_query": "ortoSat2023-CorVerdadeira",
+  "layer_legend": {
+    "legend_identifier": "_default",
+    "legend_text": "label_en",
+    "legend_elements": {
+      "_default": {
+        "label": "Cor Verdadeira",
+        "label_en": "True Color",
+        "color": "#6fa8dc"
+      }
+    }
+  },
+  "layer_style": {
+    "selected_fill_color": "yellow",
+    "selected_stroke_color": "black",
+    "stroke_color": "black"
+  }
+}
