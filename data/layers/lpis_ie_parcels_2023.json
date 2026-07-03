@@ -9,6 +9,15 @@
   "name_en": "Parcels 2023",
   "country_code": "IE",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2023,
+  "short_description": "Regen Farmer LPIS vector tiles dataset IE_Parcels_2023.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/IE_Parcels_2023",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,11 +30,23 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Parcel label", "key": "PAR_LAB" },
-    "feature_landuse": { "name": "Crop", "key": "CROP" },
+    "feature_identifier": {
+      "name": "Parcel label",
+      "key": "PAR_LAB"
+    },
+    "feature_landuse": {
+      "name": "Crop",
+      "key": "CROP"
+    },
     "others": [
-      { "name": "Claim area", "key": "CLAIM_AREA" },
-      { "name": "Herd", "key": "HERD" }
+      {
+        "name": "Claim area",
+        "key": "CLAIM_AREA"
+      },
+      {
+        "name": "Herd",
+        "key": "HERD"
+      }
     ]
   },
   "layer_style": {

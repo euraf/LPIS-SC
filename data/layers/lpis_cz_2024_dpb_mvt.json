@@ -9,6 +9,15 @@
   "name_en": "Farmers blocks 2024",
   "country_code": "CZ",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2024,
+  "short_description": "Regen Farmer LPIS vector tiles dataset CZ_2024_DPB.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/CZ_2024_DPB",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,9 +30,19 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Parcel ID", "key": "NKOD_DPB" },
-    "feature_area": { "name": "Area", "key": "VYMERA", "unit": "ha" },
-    "feature_landuse": { "name": "Crop name", "key": "KULTURANAZ" }
+    "feature_identifier": {
+      "name": "Parcel ID",
+      "key": "NKOD_DPB"
+    },
+    "feature_area": {
+      "name": "Area",
+      "key": "VYMERA",
+      "unit": "ha"
+    },
+    "feature_landuse": {
+      "name": "Crop name",
+      "key": "KULTURANAZ"
+    }
   },
   "layer_style": {
     "selected_fill_color": "yellow",

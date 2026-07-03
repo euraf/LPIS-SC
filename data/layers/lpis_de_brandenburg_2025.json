@@ -9,6 +9,15 @@
   "name_en": "Brandenburg Parcels 2025",
   "country_code": "DE",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2025,
+  "short_description": "Regen Farmer LPIS vector tiles dataset DE_Brandenburg_2025.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/DE_Brandenburg_2025",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,12 +30,27 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Field block ID", "key": "FB_ID" },
-    "feature_landuse": { "name": "Category", "key": "HBN_KAT" },
+    "feature_identifier": {
+      "name": "Field block ID",
+      "key": "FB_ID"
+    },
+    "feature_landuse": {
+      "name": "Category",
+      "key": "HBN_KAT"
+    },
     "others": [
-      { "name": "Gross area", "key": "FL_BRUTTO_" },
-      { "name": "Net area", "key": "FL_NETTO_H" },
-      { "name": "Year", "key": "FGUE_JAHR" }
+      {
+        "name": "Gross area",
+        "key": "FL_BRUTTO_"
+      },
+      {
+        "name": "Net area",
+        "key": "FL_NETTO_H"
+      },
+      {
+        "name": "Year",
+        "key": "FGUE_JAHR"
+      }
     ]
   },
   "layer_style": {

@@ -8,8 +8,14 @@
   "id": "lpis_es_cultivo_declarado",
   "name": "Cultivo Declarado",
   "name_en": "Declared Crop",
-  "attributions": "Source: FEGA SIGPAC OGC API",
   "country_code": "ES",
+  "attributions": "Source: FEGA SIGPAC OGC API",
+  "reference_year": null,
+  "short_description": "Provides the officially declared crop for Spanish LPIS parcels, supporting crop distribution analysis, agricultural monitoring, and policy-related assessments.",
+  "official_website": "https://sigpac-hubcloud.es/ogcapi",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WFS",
   "show": false,
   "disabled": false,
@@ -34,7 +40,10 @@
     },
     "feature_landuse": {
       "name": "Declared crop",
-      "keys": ["parc_producto", "tipo_aprovecha"],
+      "keys": [
+        "parc_producto",
+        "tipo_aprovecha"
+      ],
       "transform": "concatenate"
     },
     "others": [

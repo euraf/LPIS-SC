@@ -9,6 +9,15 @@
   "name_en": "Parcels 2022",
   "country_code": "FR",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2022,
+  "short_description": "Regen Farmer LPIS vector tiles dataset FR_PARCELLES_GRAPHIQUES_2022.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/FR_PARCELLES_GRAPHIQUES_2022",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,12 +30,27 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Parcel ID", "key": "id_parcel" },
-    "feature_landuse": { "name": "Crop code", "key": "code_cultu" },
+    "feature_identifier": {
+      "name": "Parcel ID",
+      "key": "id_parcel"
+    },
+    "feature_landuse": {
+      "name": "Crop code",
+      "key": "code_cultu"
+    },
     "others": [
-      { "name": "Crop group", "key": "code_group" },
-      { "name": "Culture D1", "key": "culture_d1" },
-      { "name": "Culture D2", "key": "culture_d2" }
+      {
+        "name": "Crop group",
+        "key": "code_group"
+      },
+      {
+        "name": "Culture D1",
+        "key": "culture_d1"
+      },
+      {
+        "name": "Culture D2",
+        "key": "culture_d2"
+      }
     ]
   },
   "layer_style": {

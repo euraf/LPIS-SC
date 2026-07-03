@@ -8,32 +8,54 @@
   "name": "Forest type 2021",
   "name_en": "Forest type 2021",
   "attributions": "Forest type 2021 (raster 10 m) - Copernicus Land Monitoring Service https://doi.org/10.2909/77873ff3-4edf-48d4-94cd-c5b7b61da29e",
+  "reference_year": 2021,
+  "short_description": "Classifies forested areas by their dominant forest type at 10 m resolution, supporting the assessment of forest composition and landscape structure.",
+  "official_website": "https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover/forest-type-2021-raster-10-m-100-m-europe-3-yearly",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WMS",
   "show": false,
   "disabled": false,
   "baselayer": false,
   "zIndex": 4,
   "opacity": 0.9,
-  "layer_groups": ["copernicus"],
+  "layer_groups": [
+    "copernicus"
+  ],
   "layer_name": "HRL_TCF",
   "layer_name_detail": "FTY_S2021",
   "layer_projection": "EPSG:3035",
-  "layer_origin_x": 900000.0,
-  "layer_origin_y": 7400000.0,
+  "layer_origin_x": 900000,
+  "layer_origin_y": 7400000,
   "layer_resolution": 10,
   "source_url": "https://geoserver.vlcc.geoville.com/geoserver/ows?SERVICE=WMS&VERSION=1.3.0&LAYERS=[layer_name]:[layer_name_detail]&TILED=true",
   "feature_infos": {
-    "feature_identifier": { "name": "Herbaceous cover", "key": "PALETTE_INDEX" }
+    "feature_identifier": {
+      "name": "Herbaceous cover",
+      "key": "PALETTE_INDEX"
+    }
   },
   "feature_info_format": "application/json",
   "feature_info_query": "HRL_TCF:FTY_S2021",
   "layer_legend": {
-    "legend_identifier": { "key": "PALETTE_INDEX" },
+    "legend_identifier": {
+      "key": "PALETTE_INDEX"
+    },
     "legend_text": "label_en",
     "legend_elements": {
-      "0": { "color": null, "label_en": "All non-forest areas" },
-      "1": { "color": "#469e4a", "label_en": "Broadleaved forest" },
-      "2": { "color": "#1c5c24", "label_en": "Coniferous forest" }
+      "0": {
+        "color": null,
+        "label_en": "All non-forest areas"
+      },
+      "1": {
+        "color": "#469e4a",
+        "label_en": "Broadleaved forest"
+      },
+      "2": {
+        "color": "#1c5c24",
+        "label_en": "Coniferous forest"
+      }
     }
   }
 }

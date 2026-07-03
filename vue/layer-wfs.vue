@@ -30,6 +30,8 @@ module.exports = {
         this.$set(this.layer_props, "stats", {})
         this.$set(this.layer_props, "farmPrompt", { show: false, farmId: null, clickedWrapper: null })
         this.$set(this.layer_props, "showLegend", false)
+        this.$set(this.layer_props, "showFullLegend", false)
+        this.$set(this.layer_props, "showOriginInfo", false)
         
 		return this.layer_props
 	},
@@ -351,6 +353,19 @@ module.exports = {
             @change="setShow($event.target.checked)"
             v-model="show">
         <label class="form-check-label" :for="layer_id + '-chk'"><small>{{country_code}}</small> {{ name_en }}</label>
+        <layer-info-modal
+            v-model="showOriginInfo"
+            :layer-id="layer_id"
+            :title="originInfoTitle"
+            :description="originInfoDescription"
+            :type-label="type"
+            :reference-year-label="originReferenceYearLabel"
+            :country-code="originCountryCode"
+            :country-flag-class="originCountryFlagClass"
+            :official-website="originOfficialWebsite"
+            :service-url="originServiceUrl"
+            :provider-badges="originProviderBadges"
+        ></layer-info-modal>
         <button
             v-if="layer_legend && layer_legend.legend_elements"
             type="button"
@@ -369,15 +384,21 @@ module.exports = {
                 </div>
             </div>
         </div>
-        <div class="layer-legend-inline" v-if="layer_legend && layer_legend.legend_elements" v-show="showLegend">
-            <div class="legend-item" v-for="(el, key) in layer_legend.legend_elements" :key="key">
+        <div class="layer-legend-inline" v-if="layer_legend && layer_legend.legend_elements && showLegend">
+            <div class="legend-item" v-for="entry in displayedLegendEntries" :key="entry.key">
                 <span
                     class="legend-swatch"
-                    :class="{ 'legend-swatch--nodata': el.color === null }"
-                    :style="el.color !== null ? { background: el.color } : {}"
+                    :class="{ 'legend-swatch--nodata': entry.element.color === null }"
+                    :style="entry.element.color !== null ? { background: entry.element.color } : {}"
                 ></span>
-                <span class="legend-label">{{ el[layer_legend.legend_text] }}</span>
+                <span class="legend-label">{{ entry.element[layer_legend.legend_text] }}</span>
             </div>
+            <a
+                v-if="hasLegendOverflow"
+                href="#"
+                class="tcd-pixels-link"
+                @click.prevent.stop="showFullLegend = !showFullLegend"
+            >{{ showFullLegend ? 'Show less' : 'Show full legend' }}</a>
         </div>
     </div>
 </template>

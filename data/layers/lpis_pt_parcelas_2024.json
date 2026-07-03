@@ -7,8 +7,14 @@
   "id": "lpis_pt_parcelas_2024",
   "name": "Parcelas 2024",
   "name_en": "Parcels 2024",
-  "attributions": "Source: Informação geográfica do IFAP",
   "country_code": "PT",
+  "attributions": "Source: Informação geográfica do IFAP",
+  "reference_year": 2024,
+  "short_description": "Provides official parcel boundaries, supporting farm-level analysis, land use assessment, and integration with environmental datasets.",
+  "official_website": "https://www.ifap.pt/portal/sip-informacao-basica",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "farm_id_key": "ENT_ID",
   "type": "WFS",
   "show": false,
@@ -21,8 +27,16 @@
   "layer_projection": "EPSG:4326",
   "source_url": "https://www.ifap.pt/isip/ows/[layer_name]/wfs?service=WFS&version=1.1.0&request=GetFeature&typename=[layer_name]:[layer_name_detail]&outputFormat=application/json&srsname=[layer_projection]&bbox=[extent],[layer_projection]",
   "feature_infos": {
-      "feature_identifier": { "name": "Parcel ID", "key": "PAR_ID" },
-      "others": [{ "name": "Parcel number", "key": "PAR_NUM" }]
+    "feature_identifier": {
+      "name": "Parcel ID",
+      "key": "PAR_ID"
+    },
+    "others": [
+      {
+        "name": "Parcel number",
+        "key": "PAR_NUM"
+      }
+    ]
   },
   "layer_legend": {
     "legend_identifier": "PAR_CAMPANHA",

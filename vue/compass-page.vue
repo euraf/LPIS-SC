@@ -81,23 +81,23 @@
 								<div class="layer-group layer-group--accordion">
 									<ul>
 										<li v-if="layers['tree_cover_density_2021']">
-											<span class="layer-dot" style="background-color: #4fae4e"></span>
+											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
 											<layer-wms :layer_id="'tree_cover_density_2021'" :layer_props="layers['tree_cover_density_2021']"></layer-wms>
 										</li>
 										<li v-if="layers['jrc_gfc_2020_v2']">
-											<span class="layer-dot" style="background-color: #2f6f2f"></span>
+											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
 											<layer-wms :layer_id="'jrc_gfc_2020_v2'" :layer_props="layers['jrc_gfc_2020_v2']"></layer-wms>
 										</li>
 										<li v-if="layers['woody_vegetation_layer_2021']">
-											<span class="layer-dot" style="background-color: #75dd00"></span>
+											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
 											<layer-wms :layer_id="'woody_vegetation_layer_2021'" :layer_props="layers['woody_vegetation_layer_2021']"></layer-wms>
 										</li>
 										<li v-if="layers['small_woody_features_2021']">
-											<span class="layer-dot" style="background-color: #d7f500"></span>
+											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
 											<layer-wms :layer_id="'small_woody_features_2021'" :layer_props="layers['small_woody_features_2021']"></layer-wms>
 										</li>
 										<li v-if="layers['clc_2018']">
-											<span class="layer-dot" style="background-color: #e31a1c"></span>
+											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-map"></i></span>
 											<layer-wms :layer_id="'clc_2018'" :layer_props="layers['clc_2018']"></layer-wms>
 										</li>
 									</ul>

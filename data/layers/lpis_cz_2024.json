@@ -9,6 +9,12 @@
   "name_en": "Farmer blocks 2024",
   "country_code": "CZ",
   "attributions": "Source: Česká informační agentura životního prostředí",
+  "reference_year": 2024,
+  "short_description": "Source: Česká informační agentura životního prostředí.",
+  "official_website": "https://inspire-geoportal.ec.europa.eu/srv/eng/catalog.search#/metadata/665f5127-fb9c-4d6f-8ce5-39747dc0a8017c",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WFS",
   "show": true,
   "disabled": false,
@@ -21,9 +27,21 @@
   "layer_projection": "EPSG:5514",
   "source_url": "https://gis.cenia.cz/geoserver/[layer_name]/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=[layer_name]:[layer_name_detail]&outputFormat=application%2Fjson&srsname=[layer_projection]&bbox=[extent],[layer_projection]",
   "feature_infos": {
-      "feature_identifier": { "name": "Code", "key": "NKOD_DPB" },
-      "feature_area": { "name": "Area", "key": "VYMERA", "unit": "ha" },
-      "feature_landuse": { "name": "Crop name", "key": "KULTURA", "transform": "get_from_legend", "alternate_key": "label_en" }
+    "feature_identifier": {
+      "name": "Code",
+      "key": "NKOD_DPB"
+    },
+    "feature_area": {
+      "name": "Area",
+      "key": "VYMERA",
+      "unit": "ha"
+    },
+    "feature_landuse": {
+      "name": "Crop name",
+      "key": "KULTURA",
+      "transform": "get_from_legend",
+      "alternate_key": "label_en"
+    }
   },
   "layer_legend": {
     "legend_identifier": "KULTURA",

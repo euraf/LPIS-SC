@@ -8,8 +8,14 @@
   "id": "lpis_cz_ecologicalfocusarea",
   "name": "Ecological Focus Area",
   "name_en": "Ecological Focus Area",
-  "attributions": "Source: Česká informační agentura životního prostředí",
   "country_code": "CZ",
+  "attributions": "Source: Česká informační agentura životního prostředí",
+  "reference_year": 2024,
+  "short_description": "The basic unit of the Ecological Focus Area (EFA) element is represented by the continuous area of agricultural land, as well as non-agricultural land if it fulfils agricultural non-production function.",
+  "official_website": "https://www.agrihub.cz/micka/en/record/basic?url=https%3A%2F%2Fgeoportal.gov.cz%2Fphp%2Fmicka%2Fcsw%2F%3FSERVICE%3DCSW%26REQUEST%3DGetRecordById%26ID%3D65fd6e8f-eb68-4101-a004-1218c3c0a8017c%23_65fd6e8f-eb68-4101-a004-1218c3c0a8017c",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WFS",
   "show": false,
   "disabled": false,
@@ -23,9 +29,19 @@
   "source_url": "https://gis.cenia.cz/geoserver/[layer_name]/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=[layer_name]:[layer_name_detail]&outputFormat=application%2Fjson&srsname=[layer_projection]&bbox=[extent],[layer_projection]",
   "needs_loader": true,
   "feature_infos": {
-    "feature_identifier": { "name": "Ecological Focus Area ID", "key": "ecological" },
-    "feature_landuse": { "name": "Ecological Focus Area Type", "key": "ecologic_2" },
-    "feature_area": { "name": "Area", "key": "convertedA", "unit": "ha" }
+    "feature_identifier": {
+      "name": "Ecological Focus Area ID",
+      "key": "ecological"
+    },
+    "feature_landuse": {
+      "name": "Ecological Focus Area Type",
+      "key": "ecologic_2"
+    },
+    "feature_area": {
+      "name": "Area",
+      "key": "convertedA",
+      "unit": "ha"
+    }
   },
   "layer_legend": {
     "legend_identifier": "ecologic_2",

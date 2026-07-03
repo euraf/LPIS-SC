@@ -9,6 +9,97 @@ var layer_mixin = {
         },
         feature_identifier_key() {
             return this.feature_infos.feature_identifier?.key
+        },
+        legendEntries() {
+            var legendElements = this.layer_legend && this.layer_legend.legend_elements
+                ? this.layer_legend.legend_elements
+                : null
+
+            if (!legendElements) {
+                return []
+            }
+
+            return Object.keys(legendElements).map(function(key) {
+                return {
+                    key: key,
+                    element: legendElements[key]
+                }
+            })
+        },
+        displayedLegendEntries() {
+            if (this.showFullLegend) {
+                return this.legendEntries
+            }
+            return this.legendEntries.slice(0, 6)
+        },
+        hasLegendOverflow() {
+            return this.legendEntries.length > 6
+        },
+        originInfoTitle() {
+            return this.name_en || this.name || this.layer_id
+        },
+        originInfoDescription() {
+            if (this.short_description) {
+                return String(this.short_description).trim()
+            }
+            return 'Metadata for this layer is still being completed.'
+        },
+        originOfficialWebsite() {
+            return this.official_website ? String(this.official_website).trim() : ''
+        },
+        originServiceUrl() {
+            if (!this.source_url) {
+                return ''
+            }
+            return String(this.source_url).trim()
+        },
+        originCountryCode() {
+            return this.country_code ? String(this.country_code).toUpperCase() : ''
+        },
+        originCountryFlagClass() {
+            return this.originCountryCode ? 'flag-' + this.originCountryCode.toLowerCase() : ''
+        },
+        originReferenceYearLabel() {
+            return Number.isInteger(this.reference_year) ? String(this.reference_year) : 'Not specified'
+        },
+        originLayerGroups() {
+            return Array.isArray(this.layer_groups) ? this.layer_groups : []
+        },
+        originProviderBadges() {
+            const providers = []
+            const hasGroup = (group) => this.originLayerGroups.includes(group)
+
+            if (hasGroup('copernicus')) {
+                providers.push({
+                    id: 'copernicus',
+                    name: 'Copernicus',
+                    subname: 'Land Monitoring Service',
+                    logo: 'img/copernicus_logo.png'
+                })
+            }
+
+            if (hasGroup('jrc') || String(this.layer_id || '').startsWith('jrc_')) {
+                providers.push({
+                    id: 'jrc',
+                    name: 'Joint Research Centre',
+                    subname: 'Joint Research Centre',
+                    logo: 'img/jrc.jpg'
+                })
+            }
+
+            if (hasGroup('regenfarmer_lpis_api')) {
+                providers.push({
+                    id: 'regenfarmer_lpis_api',
+                    name: 'RegenFarmer LPIS API',
+                    subname: 'LPIS API',
+                    logo: 'img/regenfarmer-icon.png'
+                })
+            }
+
+            return providers
+        },
+        hasOriginInfo() {
+            return true
         }
     },
     created() {
@@ -177,6 +268,9 @@ var layer_mixin = {
         setShow(toShow) {
             if (this.layer) {
                 this.layer.setVisible(toShow)
+                if (toShow && this.layer_legend && this.layer_legend.legend_elements) {
+                    this.showLegend = true
+                }
                 if (toShow && this.map && this.map.getView && Number.isFinite(this.minZoom)) {
                     const currentZoom = this.map.getView().getZoom()
                     if (typeof currentZoom === 'number' && currentZoom < this.minZoom) {
@@ -218,6 +312,9 @@ var layer_mixin = {
                 }
 
                 if (!toShow) {
+                    this.showOriginInfo = false
+                    this.showLegend = false
+                    this.showFullLegend = false
                     // Clear selection
                     this.selectedFeatures = []
                     VueBus.$emit('updateSelectedFeaturesQuery', this.layer_id)

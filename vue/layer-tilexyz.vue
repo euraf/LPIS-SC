@@ -12,6 +12,7 @@ module.exports = {
         this.$set(this.layer_props, "eventResource", 'tile')
         this.$set(this.layer_props, "isLoading", false)
         this.$set(this.layer_props, "tilesLoading", 0)
+        this.$set(this.layer_props, "showOriginInfo", false)
         
 		return this.layer_props
 	},
@@ -62,6 +63,19 @@ module.exports = {
             @change="setShow($event.target.checked)"
             v-model="show">
         <label class="form-check-label" :for="layer_id + '_checkbox'">{{ name_en }}</label>
+        <layer-info-modal
+            v-model="showOriginInfo"
+            :layer-id="layer_id"
+            :title="originInfoTitle"
+            :description="originInfoDescription"
+            :type-label="type"
+            :reference-year-label="originReferenceYearLabel"
+            :country-code="originCountryCode"
+            :country-flag-class="originCountryFlagClass"
+            :official-website="originOfficialWebsite"
+            :service-url="originServiceUrl"
+            :provider-badges="originProviderBadges"
+        ></layer-info-modal>
         <div class="spinner-border" v-if="isLoading" role="status"><span class="sr-only">Loading...</span></div>
     </div>
 </template>

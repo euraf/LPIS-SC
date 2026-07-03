@@ -9,6 +9,15 @@
   "name_en": "Parcels 2024",
   "country_code": "DK",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2024,
+  "short_description": "Regen Farmer LPIS vector tiles dataset DK_Marker_2024.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/DK_Marker_2024",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,11 +30,23 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Feature ID", "key": "AutoID" },
-    "feature_landuse": { "name": "Crop", "key": "Afgroede" },
+    "feature_identifier": {
+      "name": "Feature ID",
+      "key": "AutoID"
+    },
+    "feature_landuse": {
+      "name": "Crop",
+      "key": "Afgroede"
+    },
     "others": [
-      { "name": "Field block", "key": "Markblok" },
-      { "name": "Field number", "key": "Marknr" }
+      {
+        "name": "Field block",
+        "key": "Markblok"
+      },
+      {
+        "name": "Field number",
+        "key": "Marknr"
+      }
     ]
   },
   "layer_style": {

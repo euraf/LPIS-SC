@@ -9,6 +9,15 @@
   "name_en": "Parcels 2019",
   "country_code": "AT",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2019,
+  "short_description": "Regen Farmer LPIS vector tiles dataset AT_INSPIRE_FELDSTUECKE_2019_POLYGON.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/AT_INSPIRE_FELDSTUECKE_2019_POLYGON",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,9 +30,19 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Parcel ID", "key": "FS_KENNUNG" },
-    "feature_area": { "name": "Area", "key": "FS_FLAECHE_HA", "unit": "ha" },
-    "feature_landuse": { "name": "Land use", "key": "FNAR_BEZEICHNUNG" }
+    "feature_identifier": {
+      "name": "Parcel ID",
+      "key": "FS_KENNUNG"
+    },
+    "feature_area": {
+      "name": "Area",
+      "key": "FS_FLAECHE_HA",
+      "unit": "ha"
+    },
+    "feature_landuse": {
+      "name": "Land use",
+      "key": "FNAR_BEZEICHNUNG"
+    }
   },
   "layer_style": {
     "selected_fill_color": "yellow",

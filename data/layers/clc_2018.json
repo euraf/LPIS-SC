@@ -8,6 +8,12 @@
   "name": "Corine Land Cover 2018",
   "name_en": "Corine Land Cover 2018",
   "attributions": "Corine Land Cover 2018 (raster 100m) - Copernicus Land Monitoring Service. https://doi.org/10.2909/960998c1-1870-4e82-8051-6485205ebbac",
+  "reference_year": 2018,
+  "short_description": "Describes the dominant land cover and land use across Europe at 100 m resolution, providing a consistent baseline for regional and landscape-scale analyses.",
+  "official_website": "https://land.copernicus.eu/en/products/corine-land-cover/clc2018",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WMS",
   "show": false,
   "disabled": false,
@@ -15,73 +21,212 @@
   "minZoom": 10,
   "zIndex": 4,
   "opacity": 0.9,
-  "layer_groups": [ "copernicus" ],
+  "layer_groups": [
+    "copernicus"
+  ],
   "layer_name": "CLC2018_WM",
   "layer_name_detail": "13",
   "layer_projection": "CRS:84",
+  "layer_resolution": 100,
   "source_url": "https://image.discomap.eea.europa.eu/arcgis/services/Corine/[layer_name]/MapServer/WMSServer?SERVICE=WMS&VERSION=1.3.0&LAYERS=[layer_name_detail]&STYLES=&FORMAT=image/png&TRANSPARENT=true",
   "feature_infos": {
-      "feature_identifier": { "name": "CLC Code", "key": "Code_18" },
-      "others": [ { "name": "CLC", "key": "Code_18", "transform": "get_from_legend", "alternate_key": "label_en" } ]
+    "feature_identifier": {
+      "name": "CLC Code",
+      "key": "Code_18"
+    },
+    "others": [
+      {
+        "name": "CLC",
+        "key": "Code_18",
+        "transform": "get_from_legend",
+        "alternate_key": "label_en"
+      }
+    ]
   },
   "feature_info_format": "application/geo+json",
   "feature_info_query": "13",
   "layer_legend": {
-    "legend_identifier": { "key": "Code_18" },
+    "legend_identifier": {
+      "key": "Code_18"
+    },
     "legend_text": "label_en",
     "legend_elements": {
-      "111": { "label_en": "Continuous urban fabric", "color": "#e6004d" },
-      "112": { "label_en": "Discontinuous urban fabric", "color": "#ff0000" },
-      "121": { "label_en": "Industrial or commercial units", "color": "#cc4df2" },
-      "122": { "label_en": "Road and rail networks and associated land", "color": "#cc0000" },
-      "123": { "label_en": "Port areas", "color": "#e6cccc" },
-      "124": { "label_en": "Airports", "color": "#e6cce6" },
-      "131": { "label_en": "Mineral extraction sites", "color": "#a600cc" },
-      "132": { "label_en": "Dump sites", "color": "#a64d00" },
-      "133": { "label_en": "Construction sites", "color": "#ff4dff" },
-      "141": { "label_en": "Green urban areas", "color": "#ffa6ff" },
-      "142": { "label_en": "Sport and leisure facilities", "color": "#ffe6ff" },
-
-      "211": { "label_en": "Non-irrigated arable land", "color": "#ffffa8" },
-      "212": { "label_en": "Permanently irrigated land", "color": "#ffff00" },
-      "213": { "label_en": "Rice fields", "color": "#e6e600" },
-      "221": { "label_en": "Vineyards", "color": "#e68000" },
-      "222": { "label_en": "Fruit trees and berry plantations", "color": "#f2a64d" },
-      "223": { "label_en": "Olive groves", "color": "#e6a600" },
-
-      "231": { "label_en": "Pastures", "color": "#e6e64d" },
-      "241": { "label_en": "Annual crops associated with permanent crops", "color": "#ffe6a6" },
-      "242": { "label_en": "Complex cultivation patterns", "color": "#ffe64d" },
-      "243": { "label_en": "Land principally occupied by agriculture, with significant areas of natural vegetation", "color": "#e6cc4d" },
-      "244": { "label_en": "Agro-forestry areas", "color": "#f2cca6" },
-
-      "311": { "label_en": "Broad-leaved forest", "color": "#80ff00" },
-      "312": { "label_en": "Coniferous forest", "color": "#00a600" },
-      "313": { "label_en": "Mixed forest", "color": "#4dff00" },
-
-      "321": { "label_en": "Natural grasslands", "color": "#ccf24d" },
-      "322": { "label_en": "Moors and heathland", "color": "#a6ff80" },
-      "323": { "label_en": "Sclerophyllous vegetation", "color": "#a6e64d" },
-      "324": { "label_en": "Transitional woodland-shrub", "color": "#a6f200" },
-
-      "331": { "label_en": "Beaches, dunes, and sand", "color": "#e6e6e6" },
-      "332": { "label_en": "Bare rocks", "color": "#cccccc" },
-      "333": { "label_en": "Sparsely vegetated areas", "color": "#ccffcc" },
-      "334": { "label_en": "Burnt areas", "color": "#000000" },
-      "335": { "label_en": "Glaciers and perpetual snow", "color": "#a6e6cc" },
-
-      "411": { "label_en": "Inland marshes", "color": "#a6a6ff" },
-      "412": { "label_en": "Peat bogs", "color": "#4d4dff" },
-
-      "421": { "label_en": "Salt marshes", "color": "#ccccff" },
-      "422": { "label_en": "Salines", "color": "#e6e6ff" },
-      "423": { "label_en": "Intertidal flats", "color": "#a6a6e6" },
-
-      "511": { "label_en": "Water courses", "color": "#00ccf2" },
-      "512": { "label_en": "Water bodies", "color": "#80f2e6" },
-      "521": { "label_en": "Coastal lagoons", "color": "#00ffa6" },
-      "522": { "label_en": "Estuaries", "color": "#a6ffe6" },
-      "523": { "label_en": "Sea and ocean", "color": "#e6f2ff" }
+      "111": {
+        "label_en": "Continuous urban fabric",
+        "color": "#e6004d"
+      },
+      "112": {
+        "label_en": "Discontinuous urban fabric",
+        "color": "#ff0000"
+      },
+      "121": {
+        "label_en": "Industrial or commercial units",
+        "color": "#cc4df2"
+      },
+      "122": {
+        "label_en": "Road and rail networks and associated land",
+        "color": "#cc0000"
+      },
+      "123": {
+        "label_en": "Port areas",
+        "color": "#e6cccc"
+      },
+      "124": {
+        "label_en": "Airports",
+        "color": "#e6cce6"
+      },
+      "131": {
+        "label_en": "Mineral extraction sites",
+        "color": "#a600cc"
+      },
+      "132": {
+        "label_en": "Dump sites",
+        "color": "#a64d00"
+      },
+      "133": {
+        "label_en": "Construction sites",
+        "color": "#ff4dff"
+      },
+      "141": {
+        "label_en": "Green urban areas",
+        "color": "#ffa6ff"
+      },
+      "142": {
+        "label_en": "Sport and leisure facilities",
+        "color": "#ffe6ff"
+      },
+      "211": {
+        "label_en": "Non-irrigated arable land",
+        "color": "#ffffa8"
+      },
+      "212": {
+        "label_en": "Permanently irrigated land",
+        "color": "#ffff00"
+      },
+      "213": {
+        "label_en": "Rice fields",
+        "color": "#e6e600"
+      },
+      "221": {
+        "label_en": "Vineyards",
+        "color": "#e68000"
+      },
+      "222": {
+        "label_en": "Fruit trees and berry plantations",
+        "color": "#f2a64d"
+      },
+      "223": {
+        "label_en": "Olive groves",
+        "color": "#e6a600"
+      },
+      "231": {
+        "label_en": "Pastures",
+        "color": "#e6e64d"
+      },
+      "241": {
+        "label_en": "Annual crops associated with permanent crops",
+        "color": "#ffe6a6"
+      },
+      "242": {
+        "label_en": "Complex cultivation patterns",
+        "color": "#ffe64d"
+      },
+      "243": {
+        "label_en": "Land principally occupied by agriculture, with significant areas of natural vegetation",
+        "color": "#e6cc4d"
+      },
+      "244": {
+        "label_en": "Agro-forestry areas",
+        "color": "#f2cca6"
+      },
+      "311": {
+        "label_en": "Broad-leaved forest",
+        "color": "#80ff00"
+      },
+      "312": {
+        "label_en": "Coniferous forest",
+        "color": "#00a600"
+      },
+      "313": {
+        "label_en": "Mixed forest",
+        "color": "#4dff00"
+      },
+      "321": {
+        "label_en": "Natural grasslands",
+        "color": "#ccf24d"
+      },
+      "322": {
+        "label_en": "Moors and heathland",
+        "color": "#a6ff80"
+      },
+      "323": {
+        "label_en": "Sclerophyllous vegetation",
+        "color": "#a6e64d"
+      },
+      "324": {
+        "label_en": "Transitional woodland-shrub",
+        "color": "#a6f200"
+      },
+      "331": {
+        "label_en": "Beaches, dunes, and sand",
+        "color": "#e6e6e6"
+      },
+      "332": {
+        "label_en": "Bare rocks",
+        "color": "#cccccc"
+      },
+      "333": {
+        "label_en": "Sparsely vegetated areas",
+        "color": "#ccffcc"
+      },
+      "334": {
+        "label_en": "Burnt areas",
+        "color": "#000000"
+      },
+      "335": {
+        "label_en": "Glaciers and perpetual snow",
+        "color": "#a6e6cc"
+      },
+      "411": {
+        "label_en": "Inland marshes",
+        "color": "#a6a6ff"
+      },
+      "412": {
+        "label_en": "Peat bogs",
+        "color": "#4d4dff"
+      },
+      "421": {
+        "label_en": "Salt marshes",
+        "color": "#ccccff"
+      },
+      "422": {
+        "label_en": "Salines",
+        "color": "#e6e6ff"
+      },
+      "423": {
+        "label_en": "Intertidal flats",
+        "color": "#a6a6e6"
+      },
+      "511": {
+        "label_en": "Water courses",
+        "color": "#00ccf2"
+      },
+      "512": {
+        "label_en": "Water bodies",
+        "color": "#80f2e6"
+      },
+      "521": {
+        "label_en": "Coastal lagoons",
+        "color": "#00ffa6"
+      },
+      "522": {
+        "label_en": "Estuaries",
+        "color": "#a6ffe6"
+      },
+      "523": {
+        "label_en": "Sea and ocean",
+        "color": "#e6f2ff"
+      }
     }
   }
 }

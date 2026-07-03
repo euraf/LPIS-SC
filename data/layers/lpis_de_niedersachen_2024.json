@@ -9,6 +9,15 @@
   "name_en": "Lower Saxony Parcels 2024",
   "country_code": "DE",
   "attributions": "Source: Regen Farmer LPIS API",
+  "reference_year": 2024,
+  "short_description": "Regen Farmer LPIS vector tiles dataset DE_Niedersachen_2024.",
+  "official_website": "https://lpis.regenfarmer.com/api/tilesets/DE_Niedersachen_2024",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
+  "layer_groups": [
+    "regenfarmer_lpis_api"
+  ],
   "type": "MVT",
   "show": false,
   "disabled": false,
@@ -21,12 +30,27 @@
   "source_url": "https://lpis.regenfarmer.com/api/tilesets/[layer_name]/{z}/{x}/{y}",
   "needs_loader": false,
   "feature_infos": {
-    "feature_identifier": { "name": "Object ID", "key": "objid" },
-    "feature_landuse": { "name": "Name", "key": "name" },
+    "feature_identifier": {
+      "name": "Object ID",
+      "key": "objid"
+    },
+    "feature_landuse": {
+      "name": "Name",
+      "key": "name"
+    },
     "others": [
-      { "name": "Management code", "key": "bewirtschaftung" },
-      { "name": "Source object ID", "key": "quellobjektid" },
-      { "name": "Review result", "key": "ergebnisderueberpruefung" }
+      {
+        "name": "Management code",
+        "key": "bewirtschaftung"
+      },
+      {
+        "name": "Source object ID",
+        "key": "quellobjektid"
+      },
+      {
+        "name": "Review result",
+        "key": "ergebnisderueberpruefung"
+      }
     ]
   },
   "layer_style": {

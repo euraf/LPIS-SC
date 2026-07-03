@@ -7,8 +7,14 @@
   "id": "ortosat_pt_2023_corverdadeira",
   "name": "OrtoSat 2023 - Cor Verdadeira",
   "name_en": "OrtoSat 2023 - True Color",
-  "attributions": "Informacao geografica cedida pela Direcao-Geral do Territorio",
   "country_code": "PT",
+  "attributions": "Informacao geografica cedida pela Direcao-Geral do Territorio",
+  "reference_year": 2023,
+  "short_description": "30 cm orthophoto mosaic for mainland Portugal (2023), suitable for parcel context, visual validation, and background mapping.",
+  "official_website": "https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/b2a1ca02-779b-4189-b895-85d10fff610f",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WMS",
   "show": false,
   "disabled": false,
@@ -16,13 +22,18 @@
   "minZoom": 8,
   "zIndex": 0,
   "opacity": 1,
-  "layer_groups": ["orthophoto"],
+  "layer_groups": [
+    "orthophoto"
+  ],
   "layer_name": "OrtoSat2023",
   "layer_name_detail": "ortoSat2023-CorVerdadeira",
   "layer_projection": "EPSG:3857",
   "source_url": "https://ortos.dgterritorio.gov.pt/wms/ortosat2023?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=[layer_name_detail]&STYLES=&FORMAT=image/jpeg&TRANSPARENT=false",
   "feature_infos": {
-    "feature_identifier": { "name": "Layer", "key": "layer" }
+    "feature_identifier": {
+      "name": "Layer",
+      "key": "layer"
+    }
   },
   "feature_info_format": "text/plain",
   "feature_info_query": "ortoSat2023-CorVerdadeira",

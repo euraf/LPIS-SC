@@ -8,32 +8,54 @@
   "name": "Dominant leaf type 2021",
   "name_en": "Dominant leaf type 2021",
   "attributions": "Dominant leaf type 2021 (raster 10 m) - Copernicus Land Monitoring Service https://doi.org/10.2909/82f93572-9888-47ef-97a1-5cac5985a26a",
+  "reference_year": 2021,
+  "short_description": "Identifies the dominant leaf type of woody vegetation at 10 m resolution, distinguishing between broadleaved and coniferous cover to support vegetation and forest analysis.",
+  "official_website": "https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover/dominant-leaf-type-2021-raster-10-m-europe-yearly",
+  "limitations": null,
+  "policy_relevance": null,
+  "why_this_matters": null,
   "type": "WMS",
   "show": false,
   "disabled": false,
   "baselayer": false,
   "zIndex": 4,
   "opacity": 0.9,
-  "layer_groups": ["copernicus"],
+  "layer_groups": [
+    "copernicus"
+  ],
   "layer_name": "HRL_TCF",
   "layer_name_detail": "DLT_S2021",
   "layer_projection": "EPSG:3035",
-  "layer_origin_x": 900000.0,
-  "layer_origin_y": 7400000.0,
+  "layer_origin_x": 900000,
+  "layer_origin_y": 7400000,
   "layer_resolution": 10,
   "source_url": "https://geoserver.vlcc.geoville.com/geoserver/ows?SERVICE=WMS&VERSION=1.3.0&LAYERS=[layer_name]:[layer_name_detail]&TILED=true",
   "feature_infos": {
-    "feature_identifier": { "name": "Herbaceous cover", "key": "PALETTE_INDEX" }
+    "feature_identifier": {
+      "name": "Herbaceous cover",
+      "key": "PALETTE_INDEX"
+    }
   },
   "feature_info_format": "application/json",
   "feature_info_query": "HRL_TCF:DLT_S2021",
   "layer_legend": {
-    "legend_identifier": { "key": "PALETTE_INDEX" },
+    "legend_identifier": {
+      "key": "PALETTE_INDEX"
+    },
     "legend_text": "label_en",
     "legend_elements": {
-      "0": { "color": null, "label_en": "All non-forest areas" },
-      "1": { "color": "#469e4a", "label_en": "Broadleaved" },
-      "2": { "color": "#1c5c24", "label_en": "Coniferous" }
+      "0": {
+        "color": null,
+        "label_en": "All non-forest areas"
+      },
+      "1": {
+        "color": "#469e4a",
+        "label_en": "Broadleaved"
+      },
+      "2": {
+        "color": "#1c5c24",
+        "label_en": "Coniferous"
+      }
     }
   }
 }

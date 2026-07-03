@@ -46,6 +46,7 @@ httpVueLoader.register(Vue, 'vue/accordion/WoodyVegetationPanel.vue');
 httpVueLoader.register(Vue, 'vue/accordion/LulcPanel.vue');
 httpVueLoader.register(Vue, 'vue/accordion/PolicyLulcPanel.vue');
 httpVueLoader.register(Vue, 'vue/shared/LulcPieChart.vue');
+httpVueLoader.register(Vue, 'vue/shared/LayerInfoModal.vue');
 
 // ── Router ───────────────────────────────────────────────────────────────────
 const router = new VueRouter({
