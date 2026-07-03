@@ -15,7 +15,6 @@ module.exports = {
         this.$set(this.layer_props, "tilesLoading", 0)
         this.$set(this.layer_props, "showLegend", false)
         this.$set(this.layer_props, "showFullLegend", false)
-        this.$set(this.layer_props, "showOriginInfo", false)
         
 		return this.layer_props
 	},
@@ -152,7 +151,7 @@ module.exports = {
             v-model="show">
         <label class="form-check-label" :for="layer_id + '_checkbox'">{{ name_en }}</label>
         <layer-info-modal
-            v-model="showOriginInfo"
+            :layer-visible="show"
             :layer-id="layer_id"
             :title="originInfoTitle"
             :description="originInfoDescription"

@@ -312,7 +312,6 @@ var layer_mixin = {
                 }
 
                 if (!toShow) {
-                    this.showOriginInfo = false
                     this.showLegend = false
                     this.showFullLegend = false
                     // Clear selection

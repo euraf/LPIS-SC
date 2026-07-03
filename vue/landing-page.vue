@@ -170,11 +170,14 @@
 							<p class="digitaf-overline">Part of DigitAF Virtual Space</p>
 							<h2>Built Within DigitAF</h2>
 							<p>
-								LPIS-SC is developed under the DigitAF project (Grant Agreement n.º 101059794),
+								The technical implementation of the <b>LPIS Sustainability Compass</b> is led by MVARC within the DigitAF project (Grant agreement n° 101059794),
 								funded by the European Union's Horizon Europe research and innovation programme.
 							</p>
 							<a class="digitaf-cta-button" href="https://digitaf.eu" target="_blank" rel="noopener noreferrer">Visit DigitAF</a>
 						</div>
+						<a class="digitaf-logo-link" href="https://mvarc.eu" target="_blank" rel="noopener noreferrer" aria-label="MVARC website">
+							<img src="img/mvarc_logo_vert.png" alt="MVARC" class="digitaf-logo" />
+						</a>
 					</div>
 					<div class="digitaf-links">
 						<div>

@@ -31,7 +31,6 @@ module.exports = {
         this.$set(this.layer_props, "farmPrompt", { show: false, farmId: null, clickedWrapper: null })
         this.$set(this.layer_props, "showLegend", false)
         this.$set(this.layer_props, "showFullLegend", false)
-        this.$set(this.layer_props, "showOriginInfo", false)
         
 		return this.layer_props
 	},
@@ -354,7 +353,7 @@ module.exports = {
             v-model="show">
         <label class="form-check-label" :for="layer_id + '-chk'"><small>{{country_code}}</small> {{ name_en }}</label>
         <layer-info-modal
-            v-model="showOriginInfo"
+            :layer-visible="show"
             :layer-id="layer_id"
             :title="originInfoTitle"
             :description="originInfoDescription"

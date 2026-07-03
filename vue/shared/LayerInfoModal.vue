@@ -1,14 +1,10 @@
 <script>
 module.exports = {
     name: "layer-info-modal",
-    model: {
-        prop: 'value',
-        event: 'input'
-    },
     props: {
-        value: {
+        layerVisible: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         layerId: {
             type: String,
@@ -51,16 +47,34 @@ module.exports = {
             default: function() {
                 return []
             },
+        },
+        layerGroupLabels: {
+            type: Array,
+            default: function() {
+                return []
+            },
+        }
+    },
+    data() {
+        return {
+            isOpen: false,
         }
     },
     computed: {
-        isOpen() {
-            return this.value
+        hasLayerGroups() {
+            return this.layerGroupLabels.length > 0
+        }
+    },
+    watch: {
+        layerVisible(isVisible) {
+            if (!isVisible) {
+                this.isOpen = false
+            }
         }
     },
     methods: {
         setOpen(next) {
-            this.$emit('input', next)
+            this.isOpen = next
         }
     }
 }
@@ -103,6 +117,12 @@ module.exports = {
                     <div class="layer-origin-meta-item" v-if="countryCode">
                         <span class="layer-origin-meta-label">Country</span>
                         <span class="layer-origin-country"><span class="flag layer-origin-flag" :class="countryFlagClass"></span>{{ countryCode }}</span>
+                    </div>
+                    <div class="layer-origin-meta-item" v-if="hasLayerGroups">
+                        <span class="layer-origin-meta-label">Groups</span>
+                        <div class="layer-origin-group-list">
+                            <span class="layer-origin-group-chip" v-for="group in layerGroupLabels" :key="group">{{ group }}</span>
+                        </div>
                     </div>
                     <div class="layer-origin-meta-item" v-if="officialWebsite">
                         <span class="layer-origin-meta-label">Website</span>

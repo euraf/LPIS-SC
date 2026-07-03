@@ -453,9 +453,15 @@
 				<!--a class="footer-latest-button" href="#" @click.prevent="goToLandingSection('latest-improvements')">
 					Latest improvements
 				</a-->
+				<div class="compass-footer-partner">
+					<a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer"><img src="img/mvarc_logo.png" alt="MVARC agroecology" class="compass-footer-partner-logo" /></a>
+				</div>
 				<p class="compass-funding-note">
-					This tool was developed under the EU project <a href="https://digitaf.eu/" target="_blank">DigitAF</a> (Grant Agreement N° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
+					The technical implementation of this tool is led by <a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer">MVARC</a> within the EU project <a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer">DigitAF</a> (Grant agreement n° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
 				</p>
+				<div class="compass-footer-partner">
+					<a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer"><img src="img/logoDigitAF_HR_horiz.png" alt="DigitAF" class="compass-footer-partner-logo" /></a>
+				</div>
 			</footer>
 		</div>
 	</div>
