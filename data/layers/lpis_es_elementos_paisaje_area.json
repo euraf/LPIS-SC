@@ -5,8 +5,8 @@
     "API root: https://sigpac-hubcloud.es/ogcapi"
   ],
   "id": "lpis_es_elementos_paisaje_area",
-  "name": "LPIS ES - Elementos del Paisaje (Area)",
-  "name_en": "LPIS ES - Landscape Elements (Area)",
+  "name": "Elementos del Paisaje (Area)",
+  "name_en": "Landscape Elements (Area)",
   "attributions": "Source: FEGA SIGPAC OGC API",
   "country_code": "ES",
   "type": "WFS",

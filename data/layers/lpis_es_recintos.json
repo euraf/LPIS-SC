@@ -5,8 +5,8 @@
     "API root: https://sigpac-hubcloud.es/ogcapi"
   ],
   "id": "lpis_es_recintos",
-  "name": "LPIS ES - Recintos",
-  "name_en": "LPIS ES - Recintos",
+  "name": "Recintos",
+  "name_en": "Recintos",
   "attributions": "Source: FEGA SIGPAC OGC API",
   "country_code": "ES",
   "type": "WFS",

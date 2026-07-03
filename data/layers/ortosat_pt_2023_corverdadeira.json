@@ -5,8 +5,8 @@
     "Layer name in WMS: ortoSat2023-CorVerdadeira"
   ],
   "id": "ortosat_pt_2023_corverdadeira",
-  "name": "OrtoSat PT 2023 - Cor Verdadeira",
-  "name_en": "OrtoSat PT 2023 - True Color",
+  "name": "OrtoSat 2023 - Cor Verdadeira",
+  "name_en": "OrtoSat 2023 - True Color",
   "attributions": "Informacao geografica cedida pela Direcao-Geral do Territorio",
   "country_code": "PT",
   "type": "WMS",

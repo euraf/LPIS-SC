@@ -808,9 +808,18 @@ body {
 }
 
 .flag {
+  display: inline-block;
   width: 1.95rem;
   height: 1.25rem;
   border-radius: 3px;
+}
+
+.layer-group .flag {
+  width: 0.9rem;
+  height: 0.5rem;
+  border-radius: 3px;
+  transform: translateY(50%);
+  border: 1px solid lightgray;
 }
 
 .flag-pt { background: linear-gradient(90deg, #006600 40%, #ff0000 40%); }
@@ -2304,7 +2313,7 @@ body {
   }
 
   .farmer-layout {
-    grid-template-columns: 260px minmax(480px, 1fr) 320px;
+    grid-template-columns: 280px minmax(480px, 1fr) 320px;
     height: 100%;
     min-height: 0;
     overflow: hidden;

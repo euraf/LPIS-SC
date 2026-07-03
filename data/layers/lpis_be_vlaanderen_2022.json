@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_be_vlaanderen_2022",
-  "name": "BE Vlaanderen Parcels 2022",
-  "name_en": "BE Flanders Parcels 2022",
+  "name": "Vlaanderen Parcels 2022",
+  "name_en": "Flanders Parcels 2022",
   "country_code": "BE",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

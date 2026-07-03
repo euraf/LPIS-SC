@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_de_brandenburg_2025",
-  "name": "DE Brandenburg Parcels 2025",
-  "name_en": "DE Brandenburg Parcels 2025",
+  "name": "Brandenburg Parcels 2025",
+  "name_en": "Brandenburg Parcels 2025",
   "country_code": "DE",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

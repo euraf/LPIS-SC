@@ -350,7 +350,7 @@ module.exports = {
             :disabled="disabled"
             @change="setShow($event.target.checked)"
             v-model="show">
-        <label class="form-check-label" :for="layer_id + '-chk'">{{ name_en }}</label>
+        <label class="form-check-label" :for="layer_id + '-chk'"><small>{{country_code}}</small> {{ name_en }}</label>
         <button
             v-if="layer_legend && layer_legend.legend_elements"
             type="button"

@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_cz_2024_dpb_mvt",
-  "name": "CZ Parcels 2024",
-  "name_en": "CZ Parcels 2024",
+  "name": "Díl půdního bloku 2024",
+  "name_en": "Farmers blocks 2024",
   "country_code": "CZ",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

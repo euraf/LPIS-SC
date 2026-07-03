@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_nl_brpgewaspercelen_definitief_2022",
-  "name": "NL Parcels 2022",
-  "name_en": "NL Parcels 2022",
+  "name": "Parcels 2022",
+  "name_en": "Parcels 2022",
   "country_code": "NL",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

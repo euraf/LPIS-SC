@@ -5,8 +5,8 @@
     "Layer: OI.OrthoimageCoverage (full Spain coverage; orthophoto at finer scales, Sentinel-2 fallback at smaller scales)."
   ],
   "id": "pnoa_es_orthoimagecoverage_ma",
-  "name": "PNOA ES - Ortoimagen MA",
-  "name_en": "PNOA ES - Orthoimage MA",
+  "name": "PNOA Ortoimagen MA",
+  "name_en": "PNOA Orthoimage MA",
   "attributions": "Source: IGN/CNIG - Plan Nacional de Ortofotografia Aerea (PNOA)",
   "country_code": "ES",
   "type": "WMS",

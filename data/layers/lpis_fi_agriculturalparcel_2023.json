@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_fi_agriculturalparcel_2023",
-  "name": "FI Agricultural Parcels 2023",
-  "name_en": "FI Agricultural Parcels 2023",
+  "name": "Agricultural Parcels 2023",
+  "name_en": "Agricultural Parcels 2023",
   "country_code": "FI",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

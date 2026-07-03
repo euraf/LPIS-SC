@@ -6,8 +6,8 @@
     "Using collection cultivo_declarado for declared crop information."
   ],
   "id": "lpis_es_cultivo_declarado",
-  "name": "LPIS ES - Cultivo Declarado",
-  "name_en": "LPIS ES - Declared Crop",
+  "name": "Cultivo Declarado",
+  "name_en": "Declared Crop",
   "attributions": "Source: FEGA SIGPAC OGC API",
   "country_code": "ES",
   "type": "WFS",

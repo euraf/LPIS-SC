@@ -159,6 +159,20 @@ module.exports = {
             }
             const value = f.get(this.feature_identifier_key)
             return value !== undefined && value !== null ? value.toString() : 'selected'
+        },
+        labelWithFlag(name_en) {
+            // Regex checks for 2 uppercase letters at the start, followed by a space, then the rest of the text
+            const match = name_en.match(/^([A-Z]{2})\s+(.*)$/);
+            
+            if (match) {
+                const countryCode = match[1].toLowerCase(); // "ES" becomes "es"
+                const labelText = match[2];                 // "Recintos"
+                
+                return `<span class="flag flag-${countryCode}"></span> ${labelText}`;
+            }
+            
+            // Fallback just in case the string doesn't start with a country code
+            return name_en; 
         }
     }
 }
@@ -170,7 +184,7 @@ module.exports = {
             :disabled="disabled"
             @change="setShow($event.target.checked)"
             v-model="show">
-        <label class="form-check-label" :for="layer_id + '_checkbox'">{{ name_en }}</label>
+        <label class="form-check-label" :for="layer_id + '_checkbox'"><small>{{country_code}}</small> {{ name_en }}</label>
         <div class="spinner-border" v-if="isLoading" role="status"><span class="sr-only">Loading...</span></div>
     </div>
 </template>

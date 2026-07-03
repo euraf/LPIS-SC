@@ -5,8 +5,8 @@
     "WMS/WFS, metadata and download options available at https://www.ifap.pt/isip/ows/. WMS available at https://www.ifap.pt/isip/ows/isip.data/wms?service=wms&request=getcapabilities"
   ],
   "id": "lpis_pt_parcelas_2024",
-  "name": "LPIS PT - Parcelas 2024",
-  "name_en": "LPIS PT - Parcels 2024",
+  "name": "Parcelas 2024",
+  "name_en": "Parcels 2024",
   "attributions": "Source: Informação geográfica do IFAP",
   "country_code": "PT",
   "farm_id_key": "ENT_ID",

@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_at_inspire_feldstuecke_2019_polygon",
-  "name": "AT Parcels 2019",
-  "name_en": "AT Parcels 2019",
+  "name": "Parcels 2019",
+  "name_en": "Parcels 2019",
   "country_code": "AT",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

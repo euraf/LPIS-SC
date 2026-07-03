@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_dk_marker_2023",
-  "name": "DK Parcels 2023",
-  "name_en": "DK Parcels 2023",
+  "name": "Parcels 2023",
+  "name_en": "Parcels 2023",
   "country_code": "DK",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",

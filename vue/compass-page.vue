@@ -57,7 +57,11 @@
 								<div class="layer-group layer-group--accordion">
 									<ul>
 										<li v-for="layer in lpisLayers" :key="layer.id">
-											<span class="layer-dot" style="background-color: #86d94c"></span>
+											<span
+												class="flag"
+												:class="'flag-' + layer.country_code.toLowerCase()"
+												:aria-label="layer.country_code"
+											></span>
 											<component :is="layer.type === 'MVT' ? 'layer-mvt' : 'layer-wfs'" :layer_id="layer.id" :layer_props="layer"></component>
 										</li>
 									</ul>
@@ -101,6 +105,47 @@
 							</div>
 						</div>
 
+						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.orthophoto }">
+							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('orthophoto')">
+								<span class="accordion-icon">🛰️</span>
+								<span class="accordion-title">Orthophoto Layers</span>
+								<span class="accordion-chevron">
+									<i class="fa fa-chevron-down"></i>
+								</span>
+							</button>
+							<div class="accordion-body">
+								<div class="layer-group layer-group--accordion">
+									<ul>
+										<li v-for="layer in orthophotoLayers" :key="layer.id">
+											<span
+												class="flag"
+												:class="'flag-' + layer.country_code.toLowerCase()"
+												:aria-label="layer.country_code"
+											></span>
+											<component
+												:is="layer.type === 'tileXYZ' ? 'layer-tilexyz' : 'layer-wms'"
+												:layer_id="layer.id"
+												:layer_props="layer"
+											></component>
+										</li>
+										<li>
+											<span><i class="fa-solid fa-earth-europe"></i></span>
+											<div class="form-check">
+												<input
+													id="orthophoto-world-imagery"
+													class="form-check-input"
+													type="checkbox"
+													:checked="activeBasemap === 'imagery'"
+													@change="setOrthophotoBasemap($event.target.checked)"
+												>
+												<label class="form-check-label" for="orthophoto-world-imagery">World Imagery (Esri)</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
 						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.administrative }">
 							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('administrative')">
 								<span class="accordion-icon">🧭</span>
@@ -127,43 +172,6 @@
 										<li>
 											<span class="layer-dot" style="background-color: rgba(100,100,100,0.5)"></span>
 											<span class="layer-label">LAU <small>(zoom ≥ 11)</small></span>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.orthophoto }">
-							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('orthophoto')">
-								<span class="accordion-icon">🛰️</span>
-								<span class="accordion-title">Orthophoto Layers</span>
-								<span class="accordion-chevron">
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</button>
-							<div class="accordion-body">
-								<div class="layer-group layer-group--accordion">
-									<ul>
-										<li v-for="layer in orthophotoLayers" :key="layer.id">
-											<span class="layer-dot" :style="{ backgroundColor: layer.layer_legend?.legend_elements?._default?.color || '#6fa8dc' }"></span>
-											<component
-												:is="layer.type === 'tileXYZ' ? 'layer-tilexyz' : 'layer-wms'"
-												:layer_id="layer.id"
-												:layer_props="layer"
-											></component>
-										</li>
-										<li>
-											<span class="layer-dot" style="background-color: #5168b8"></span>
-											<div class="form-check">
-												<input
-													id="orthophoto-world-imagery"
-													class="form-check-input"
-													type="checkbox"
-													:checked="activeBasemap === 'imagery'"
-													@change="setOrthophotoBasemap($event.target.checked)"
-												>
-												<label class="form-check-label" for="orthophoto-world-imagery">World Imagery (Esri)</label>
-											</div>
 										</li>
 									</ul>
 								</div>

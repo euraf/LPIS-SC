@@ -5,8 +5,8 @@
     "Dataset listed in https://raw.githubusercontent.com/regen-farmer/lpis-showcase/refs/heads/main/src/openlayers.html"
   ],
   "id": "lpis_de_niedersachen_2024",
-  "name": "DE Niedersachsen Parcels 2024",
-  "name_en": "DE Lower Saxony Parcels 2024",
+  "name": "Niedersachsen Parcels 2024",
+  "name_en": "Lower Saxony Parcels 2024",
   "country_code": "DE",
   "attributions": "Source: Regen Farmer LPIS API",
   "type": "MVT",
