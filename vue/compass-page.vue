@@ -376,7 +376,7 @@
 					</div>
 				</div>
 
-				<aside v-if="isFarmer" class="farm-right-panel">
+				<aside v-if="isFarmer || isResearcher" class="farm-right-panel">
 					<div class="panel-title-row">
 						<h3>{{ subjectTitle }}</h3>
 						<span>{{ subjectId }}</span>
@@ -664,6 +664,9 @@ module.exports = {
 		currentMapZoomLabel() {
 			if (typeof this.currentMapZoom !== "number") return "—";
 			return Math.round(this.currentMapZoom * 100) / 100;
+		},
+		isResearcher() {
+			return this.activeProfile === "researcher";
 		},
 		isFarmer() {
 			return this.activeProfile === "farmer";
