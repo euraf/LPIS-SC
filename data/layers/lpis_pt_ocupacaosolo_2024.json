@@ -15,6 +15,10 @@
   "limitations": null,
   "policy_relevance": null,
   "why_this_matters": null,
+  "farm_id_ref": {
+    "layer_id": "lpis_pt_parcelas_2024",
+    "farm_id_key": "ENT_ID"
+  },
   "type": "WFS",
   "show": false,
   "disabled": false,

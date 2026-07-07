@@ -28,7 +28,7 @@ module.exports = {
             bbox_10: { bboxLayer: null, bboxPixelsLayer: null, stats: {} }
         })
         this.$set(this.layer_props, "stats", {})
-        this.$set(this.layer_props, "farmPrompt", { show: false, farmId: null, clickedWrapper: null })
+        this.$set(this.layer_props, "farmPrompt", { show: false, farmId: null, clickedWrapper: null, mode: null, referenceLayerId: null })
         this.$set(this.layer_props, "showLegend", false)
         this.$set(this.layer_props, "showFullLegend", false)
         
@@ -181,6 +181,8 @@ module.exports = {
 
                 // Reset prompt for every new click; it will be re-opened when conditions match.
                 _this.$set(_this.farmPrompt, 'show', false);
+                _this.$set(_this.farmPrompt, 'mode', null);
+                _this.$set(_this.farmPrompt, 'referenceLayerId', null);
 
                 if (!_this.layer.getVisible()) {
                     return
@@ -229,18 +231,7 @@ module.exports = {
                             _this.selectedFeatures.splice(0)
                             _this.selectedFeatures.push(newFeatureWrapper)
 
-                            // Offer full-farm selection if layer has farm_id_key
-                            if (_this.farm_id_key) {
-                                const farmId =
-                                    clickedFeature.get(_this.farm_id_key) ??
-                                    clickedFeature.get(String(_this.farm_id_key).toLowerCase()) ??
-                                    clickedFeature.get(String(_this.farm_id_key).toUpperCase());
-                                if (farmId != null) {
-                                    _this.$set(_this.farmPrompt, 'farmId', farmId);
-                                    _this.$set(_this.farmPrompt, 'clickedWrapper', newFeatureWrapper);
-                                    _this.$set(_this.farmPrompt, 'show', true);
-                                }
-                            }
+                            _this.setupFarmPromptForSelection(clickedFeature, newFeatureWrapper, evt)
                         }
                     }
                     _this.layer.changed()
@@ -317,14 +308,326 @@ module.exports = {
                 this.$router.replace({ query: newQuery });
             }
         },
+        getFeatureValueCaseInsensitive(feature, key) {
+            if (!feature || !key) return null;
+            return feature.get(key) ??
+                feature.get(String(key).toLowerCase()) ??
+                feature.get(String(key).toUpperCase()) ??
+                null;
+        },
+        getLayerById(layerId) {
+            if (!this.map || !layerId) return null;
+            return this.map.getLayers().getArray().find(layer => layer.get('my_layer_id') === layerId) || null;
+        },
+        loadSourceAtCoordinateInBackground(source, coordinate) {
+            if (!source || !coordinate || !this.map) {
+                return Promise.resolve();
+            }
+
+            const view = this.map.getView();
+            const projection = view && typeof view.getProjection === 'function' ? view.getProjection() : null;
+            const resolution = view && typeof view.getResolution === 'function' ? view.getResolution() : null;
+
+            if (!projection || !resolution || typeof source.loadFeatures !== 'function') {
+                return Promise.resolve();
+            }
+
+            // Small buffered extent around click to trigger WFS bbox loading.
+            const size = Math.max(resolution * 64, 1);
+            const extent = [
+                coordinate[0] - size,
+                coordinate[1] - size,
+                coordinate[0] + size,
+                coordinate[1] + size
+            ];
+
+            return new Promise(resolve => {
+                let settled = false;
+
+                const finish = () => {
+                    if (settled) return;
+                    settled = true;
+                    if (typeof source.un === 'function') {
+                        source.un('featuresloadend', onLoadEnd);
+                        source.un('featuresloaderror', onLoadError);
+                    }
+                    resolve();
+                };
+
+                const onLoadEnd = () => finish();
+                const onLoadError = () => finish();
+
+                if (typeof source.on === 'function') {
+                    source.on('featuresloadend', onLoadEnd);
+                    source.on('featuresloaderror', onLoadError);
+                }
+
+                try {
+                    source.loadFeatures(extent, resolution, projection);
+                } catch (e) {
+                    finish();
+                    return;
+                }
+
+                // Fallback in case load events are not emitted.
+                setTimeout(finish, 1200);
+            });
+        },
+        setupFarmPromptForSelection(clickedFeature, clickedWrapper, evt) {
+            let farmId = null;
+
+            if (this.farm_id_key) {
+                farmId = this.getFeatureValueCaseInsensitive(clickedFeature, this.farm_id_key);
+                if (farmId != null) {
+                    this.$set(this.farmPrompt, 'farmId', farmId);
+                    this.$set(this.farmPrompt, 'clickedWrapper', clickedWrapper);
+                    this.$set(this.farmPrompt, 'mode', 'direct');
+                    this.$set(this.farmPrompt, 'referenceLayerId', null);
+                    this.$set(this.farmPrompt, 'show', true);
+                    return;
+                }
+            }
+
+            if (!this.farm_id_ref || !this.farm_id_ref.layer_id || !this.farm_id_ref.farm_id_key) {
+                return;
+            }
+
+            const referenceLayer = this.getLayerById(this.farm_id_ref.layer_id);
+            const referenceSource = referenceLayer && typeof referenceLayer.getSource === 'function'
+                ? referenceLayer.getSource()
+                : null;
+            if (!referenceSource || typeof referenceSource.getFeatures !== 'function') {
+                return;
+            }
+
+            const clickCoordinate = evt && evt.coordinate;
+            if (!clickCoordinate) {
+                return;
+            }
+
+            const getClickedReferenceFeature = () => referenceSource.getFeatures().find(f => {
+                const geom = f && f.getGeometry ? f.getGeometry() : null;
+                return geom && typeof geom.intersectsCoordinate === 'function' && geom.intersectsCoordinate(clickCoordinate);
+            });
+
+            const applyPromptFromReferenceFeature = (refFeature) => {
+                if (!refFeature) return;
+                farmId = this.getFeatureValueCaseInsensitive(refFeature, this.farm_id_ref.farm_id_key);
+                if (farmId == null) return;
+
+                this.$set(this.farmPrompt, 'farmId', farmId);
+                this.$set(this.farmPrompt, 'clickedWrapper', clickedWrapper);
+                this.$set(this.farmPrompt, 'mode', 'reference');
+                this.$set(this.farmPrompt, 'referenceLayerId', this.farm_id_ref.layer_id);
+                this.$set(this.farmPrompt, 'show', true);
+            };
+
+            const clickedRefFeature = getClickedReferenceFeature();
+            if (clickedRefFeature) {
+                applyPromptFromReferenceFeature(clickedRefFeature);
+                return;
+            }
+
+            // If reference layer isn't loaded yet, fetch around click in background then retry.
+            this.loadSourceAtCoordinateInBackground(referenceSource, clickCoordinate).then(() => {
+                applyPromptFromReferenceFeature(getClickedReferenceFeature());
+            });
+        },
+        featuresIntersect(featureA, featureB) {
+            const geomA = featureA && featureA.getGeometry ? featureA.getGeometry() : null;
+            const geomB = featureB && featureB.getGeometry ? featureB.getGeometry() : null;
+            if (!geomA || !geomB) {
+                return false;
+            }
+
+            if (!ol.extent.intersects(geomA.getExtent(), geomB.getExtent())) {
+                return false;
+            }
+
+            try {
+                const formatter = new ol.format.GeoJSON();
+                const geojsonA = formatter.writeFeatureObject(featureA, {
+                    featureProjection: MAP_PROJECTION,
+                    dataProjection: TURF_PROJECTION
+                });
+                const geojsonB = formatter.writeFeatureObject(featureB, {
+                    featureProjection: MAP_PROJECTION,
+                    dataProjection: TURF_PROJECTION
+                });
+                return turf.booleanIntersects(geojsonA, geojsonB);
+            } catch (e) {
+                return true;
+            }
+        },
+        getReferenceFarmFeaturesByFarmId(farmId) {
+            if (!farmId || !this.farm_id_ref || !this.farm_id_ref.layer_id || !this.farm_id_ref.farm_id_key) {
+                return [];
+            }
+
+            const referenceLayer = this.getLayerById(this.farm_id_ref.layer_id);
+            const referenceSource = referenceLayer && typeof referenceLayer.getSource === 'function'
+                ? referenceLayer.getSource()
+                : null;
+            if (!referenceSource || typeof referenceSource.getFeatures !== 'function') {
+                return [];
+            }
+
+            return referenceSource.getFeatures().filter(f =>
+                String(this.getFeatureValueCaseInsensitive(f, this.farm_id_ref.farm_id_key)) === String(farmId)
+            );
+        },
+        getFarmSelectionCandidates(context) {
+            if (!context || context.farmId == null) {
+                return [];
+            }
+
+            if (context.mode === 'reference') {
+                const farmFeaturesInReferenceLayer = this.getReferenceFarmFeaturesByFarmId(context.farmId);
+                return this.source.getFeatures().filter(currentFeature =>
+                    farmFeaturesInReferenceLayer.some(referenceFeature => this.featuresIntersect(currentFeature, referenceFeature))
+                );
+            }
+
+            if (!this.farm_id_key) {
+                return [];
+            }
+
+            return this.source.getFeatures().filter(f =>
+                String(this.getFeatureValueCaseInsensitive(f, this.farm_id_key)) === String(context.farmId)
+            );
+        },
+        resolveFarmContextFromCurrentSelection() {
+            const selectedWrapper = Array.isArray(this.selectedFeatures) && this.selectedFeatures.length
+                ? this.selectedFeatures[0]
+                : null;
+            const selectedFeature = selectedWrapper && selectedWrapper.feature;
+            if (!selectedFeature) {
+                return null;
+            }
+
+            if (this.farm_id_key) {
+                const directFarmId = this.getFeatureValueCaseInsensitive(selectedFeature, this.farm_id_key);
+                if (directFarmId != null && String(directFarmId).trim() !== '') {
+                    return { mode: 'direct', farmId: directFarmId, referenceLayerId: null };
+                }
+            }
+
+            if (!this.farm_id_ref || !this.farm_id_ref.layer_id || !this.farm_id_ref.farm_id_key) {
+                return null;
+            }
+
+            const referenceLayer = this.getLayerById(this.farm_id_ref.layer_id);
+            const referenceSource = referenceLayer && typeof referenceLayer.getSource === 'function'
+                ? referenceLayer.getSource()
+                : null;
+            if (!referenceSource || typeof referenceSource.getFeatures !== 'function') {
+                return null;
+            }
+
+            const clickedRefFeature = referenceSource.getFeatures().find(f => this.featuresIntersect(selectedFeature, f));
+            if (!clickedRefFeature) {
+                return null;
+            }
+
+            const referenceFarmId = this.getFeatureValueCaseInsensitive(clickedRefFeature, this.farm_id_ref.farm_id_key);
+            if (referenceFarmId == null || String(referenceFarmId).trim() === '') {
+                return null;
+            }
+
+            return { mode: 'reference', farmId: referenceFarmId, referenceLayerId: this.farm_id_ref.layer_id };
+        },
+        getFarmActionContext() {
+            const fromSelection = this.resolveFarmContextFromCurrentSelection();
+            if (fromSelection) {
+                return fromSelection;
+            }
+
+            if (this.farmPrompt && this.farmPrompt.farmId != null && String(this.farmPrompt.farmId).trim() !== '') {
+                return {
+                    mode: this.farmPrompt.mode || (this.farm_id_ref ? 'reference' : 'direct'),
+                    farmId: this.farmPrompt.farmId,
+                    referenceLayerId: this.farmPrompt.referenceLayerId || (this.farm_id_ref ? this.farm_id_ref.layer_id : null)
+                };
+            }
+
+            return null;
+        },
+        getFullFarmActionState() {
+            debugger
+            const context = this.getFarmActionContext();
+            if (!context) {
+                return { available: false, isFull: false, farmId: null };
+            }
+
+            const candidates = this.getFarmSelectionCandidates(context);
+            if (!candidates.length) {
+                // Keep action available so user can trigger background loading/retry.
+                return { available: true, isFull: false, farmId: context.farmId };
+            }
+
+            const selectedIds = new Set(this.selectedFeatures.map(f => String(f.id)));
+            const isFull = candidates.every(feature =>
+                selectedIds.has(String(feature.get(this.feature_identifier_key)))
+            );
+
+            return { available: true, isFull: isFull, farmId: context.farmId };
+        },
+        selectFullFarmFromCurrentSelection() {
+            const context = this.getFarmActionContext();
+            if (!context) {
+                return;
+            }
+
+            this.$set(this.farmPrompt, 'farmId', context.farmId);
+            this.$set(this.farmPrompt, 'mode', context.mode);
+            this.$set(this.farmPrompt, 'referenceLayerId', context.referenceLayerId);
+
+            if (context.mode === 'reference' && !this.getReferenceFarmFeaturesByFarmId(context.farmId).length) {
+                const selectedWrapper = Array.isArray(this.selectedFeatures) && this.selectedFeatures.length
+                    ? this.selectedFeatures[0]
+                    : null;
+                const selectedFeature = selectedWrapper && selectedWrapper.feature;
+                const geom = selectedFeature && selectedFeature.getGeometry ? selectedFeature.getGeometry() : null;
+                const center = geom ? ol.extent.getCenter(geom.getExtent()) : null;
+                const referenceLayer = this.getLayerById(context.referenceLayerId);
+                const referenceSource = referenceLayer && typeof referenceLayer.getSource === 'function'
+                    ? referenceLayer.getSource()
+                    : null;
+
+                if (referenceSource && center) {
+                    this.loadSourceAtCoordinateInBackground(referenceSource, center).then(() => {
+                        this.selectFullFarm();
+                    });
+                    return;
+                }
+            }
+
+            this.selectFullFarm();
+        },
         selectFullFarm() {
             const farmId = this.farmPrompt.farmId;
+            const promptMode = this.farmPrompt.mode;
+            const referenceLayerId = this.farmPrompt.referenceLayerId;
             this.$set(this.farmPrompt, 'show', false);
-            if (!farmId || !this.farm_id_key) return;
-            const farmFeatures = this.source.getFeatures().filter(f =>
-                f.get(this.farm_id_key) === farmId
-            );
-            this.selectedFeatures = farmFeatures.map(f => this.createSelectedFeature(f));
+            if (!farmId) return;
+
+            if (promptMode === 'reference' && referenceLayerId) {
+                const selectedCurrentLayerFeatures = this.getFarmSelectionCandidates({
+                    mode: 'reference',
+                    farmId: farmId,
+                    referenceLayerId: referenceLayerId
+                });
+
+                this.selectedFeatures = selectedCurrentLayerFeatures.map(f => this.createSelectedFeature(f));
+            } else {
+                const farmFeatures = this.getFarmSelectionCandidates({
+                    mode: 'direct',
+                    farmId: farmId,
+                    referenceLayerId: null
+                });
+                this.selectedFeatures = farmFeatures.map(f => this.createSelectedFeature(f));
+            }
+
             this.selectedLegendElements = this.selectedFeatures.map(f => f.legendId);
             this.layer.changed();
             this.updateSelectedFeaturesQuery();

@@ -8,7 +8,10 @@
 			</div>
 			<div class="insight-card">
 				<span class="card-label">Nr. of Parcels</span>
-				<span class="card-value">{{ parcelOverview.nrParcels }}</span>
+				<span class="card-value">
+					{{ parcelOverview.nrParcels }}
+					<span v-if="parcelOverview.layerCount > 1">(from {{ parcelOverview.layerCount }} layers)</span>
+				</span>
 			</div>
 			<div class="insight-card">
 				<span class="card-label">Country</span>
@@ -64,11 +67,13 @@ module.exports = {
 
 			let totalArea = 0;
 			const countryCodes = new Set();
+			const layerIds = new Set();
 			for (const sf of all) {
 				const layer = this.layers[sf.layerId];
 				if (layer && typeof layer.getFeatureAreaHa === 'function') totalArea += layer.getFeatureAreaHa(sf.feature) || 0;
 				else if (sf.area) totalArea += sf.area;
 				if (layer && layer.country_code) countryCodes.add(layer.country_code);
+				if (sf.layerId) layerIds.add(sf.layerId);
 			}
 
 			const nuts2Map = new Map();
@@ -110,6 +115,7 @@ module.exports = {
 			return {
 				totalArea: totalArea > 0 ? totalArea.toFixed(2) + ' ha' : '—',
 				nrParcels: all.length,
+				layerCount: layerIds.size,
 				country: countryCodes.size ? Array.from(countryCodes).join(', ') : '—',
 				nuts2: this.formatRegionSummary(sort(nuts2Map)),
 				nuts3: this.formatRegionSummary(sort(nuts3Map)),

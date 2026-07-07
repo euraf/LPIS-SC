@@ -381,6 +381,17 @@
 						<h3>{{ subjectTitle }}</h3>
 						<span>{{ subjectId }}</span>
 					</div>
+					<div v-if="isFarmer" class="mt-2">
+						<button
+							type="button"
+							class="tour-button"
+							:disabled="!fullFarmAction.available"
+							:title="fullFarmAction.available ? '' : fullFarmAction.disabledHint"
+							@click="onSelectFullFarmClick"
+						>{{ fullFarmAction.available
+							? (fullFarmAction.isFull ? 'Full farm retrieved' : 'Select full farm')
+							: fullFarmAction.disabledLabel }}</button>
+					</div>
 
 					<div class="indicator-accordion">
 						<div
@@ -562,6 +573,8 @@ module.exports = {
 				administrative: false,
 				orthophoto: false,
 			},
+			fullFarmActionVersion: 0,
+			onLayerApiReadyHandler: null,
         }
     },
     created() {
@@ -600,7 +613,17 @@ module.exports = {
 			this.loadNutsLauHierarchy();
 			this.setupMap();
 		});
+		this.onLayerApiReadyHandler = () => {
+			this.fullFarmActionVersion += 1;
+		};
+		VueBus.$on('layerApiReady', this.onLayerApiReadyHandler);
 		window.addEventListener("resize", this.refreshMapSize);
+	},
+	beforeDestroy() {
+		if (this.onLayerApiReadyHandler) {
+			VueBus.$off('layerApiReady', this.onLayerApiReadyHandler);
+		}
+		window.removeEventListener("resize", this.refreshMapSize);
 	},
 	watch: {
 		visibleCountries() {
@@ -920,6 +943,35 @@ module.exports = {
 				"researcher": "" // TODO
 			}[this.activeProfile]
 		},
+		farmId() {
+			const layers = Object.values(this.layers || {});
+
+			for (const layer of layers) {
+				if (!layer || !Array.isArray(layer.selectedFeatures) || layer.selectedFeatures.length === 0) {
+					continue;
+				}
+
+				const selectedWrapper = layer.selectedFeatures[0];
+				const feature = selectedWrapper && selectedWrapper.feature;
+				if (!feature || typeof feature.get !== "function") {
+					continue;
+				}
+
+				if (layer.farm_id_key) {
+					const key = layer.farm_id_key;
+					const value = feature.get(key) ?? feature.get(String(key).toLowerCase()) ?? feature.get(String(key).toUpperCase());
+					if (value != null && String(value).trim() !== "") {
+						return String(value);
+					}
+				}
+
+				if (layer.farmPrompt && layer.farmPrompt.farmId != null && String(layer.farmPrompt.farmId).trim() !== "") {
+					return String(layer.farmPrompt.farmId);
+				}
+			}
+
+			return "";
+		},
 		subjectId() {
 			if (this.activeProfile === "researcher") {
 				return ; //TODO
@@ -940,7 +992,80 @@ module.exports = {
 				}
 				return `${this.getPolicyLevelLabel(this.policyStatsLevel)}: ${id}`;
 			}
-			return ; //TODO selected region
+			if (this.activeProfile === "farmer") {
+				if (!this.anySelectedFeature) {
+					return "Select parcel";
+				}
+				return this.farmId ? `Farm ID: ${this.farmId}` : "Farm ID unavailable";
+			}
+			return this.farmId ? `Farm ID: ${this.farmId}` : "";
+		},
+		fullFarmAction() {
+			this.fullFarmActionVersion;
+			const layers = Object.values(this.layers || {});
+			for (const layer of layers) {
+				if (!layer) {
+					continue;
+				}
+
+				let state = null;
+				if (typeof layer.getFullFarmActionState === 'function') {
+					state = layer.getFullFarmActionState();
+				} else if (layer.farmPrompt && layer.farmPrompt.farmId != null && String(layer.farmPrompt.farmId).trim() !== '') {
+					state = {
+						available: true,
+						isFull: false,
+						farmId: layer.farmPrompt.farmId
+					};
+				}
+
+				if (state && state.available) {
+					return {
+						available: true,
+						isFull: !!state.isFull,
+						farmId: state.farmId,
+						layerId: layer.id,
+						disabledLabel: '',
+						disabledHint: ''
+					};
+				}
+			}
+
+			const selectedLayer = layers.find(layer =>
+				layer && Array.isArray(layer.selectedFeatures) && layer.selectedFeatures.length > 0
+			);
+
+			if (!selectedLayer) {
+				return {
+					available: false,
+					isFull: false,
+					farmId: null,
+					layerId: null,
+					disabledLabel: 'Select parcel first',
+					disabledHint: 'Select a parcel to enable full-farm retrieval.'
+				};
+			}
+
+			const supportsFarm = !!(selectedLayer.farm_id_key || selectedLayer.farm_id_ref);
+			if (!supportsFarm) {
+				return {
+					available: false,
+					isFull: false,
+					farmId: null,
+					layerId: selectedLayer.id,
+					disabledLabel: 'Farm ID unavailable',
+					disabledHint: 'Farm ID not available for this layer.'
+				};
+			}
+
+			return {
+				available: false,
+				isFull: false,
+				farmId: null,
+				layerId: selectedLayer.id,
+				disabledLabel: 'Select full farm',
+				disabledHint: 'Unable to retrieve full farm for current selection.'
+			};
 		},
 		anySelectedFeature() {
 			for (const layer of Object.values(this.layers)) {
@@ -2105,6 +2230,16 @@ module.exports = {
 		},
 		setOrthophotoBasemap(enabled) {
 			this.applyBasemap(enabled ? 'imagery' : 'osm');
+		},
+		onSelectFullFarmClick() {
+			if (!this.fullFarmAction.available || !this.fullFarmAction.layerId) {
+				return;
+			}
+
+			const layer = this.layers[this.fullFarmAction.layerId];
+			if (layer && typeof layer.selectFullFarmFromCurrentSelection === 'function') {
+				layer.selectFullFarmFromCurrentSelection();
+			}
 		},
         toggleCategory(id) {
 			const cat = this.indicatorCategories.find((c) => c.id === id);

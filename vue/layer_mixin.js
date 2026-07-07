@@ -168,6 +168,20 @@ var layer_mixin = {
 
             layerObj.generateLegendKey = layerVue.generateLegendKey
 
+            if (typeof layerVue.selectFullFarmFromCurrentSelection === 'function') {
+                layerObj.selectFullFarmFromCurrentSelection = function() {
+                    return layerVue.selectFullFarmFromCurrentSelection()
+                }
+            }
+
+            if (typeof layerVue.getFullFarmActionState === 'function') {
+                layerObj.getFullFarmActionState = function() {
+                    return layerVue.getFullFarmActionState()
+                }
+            }
+
+            VueBus.$emit('layerApiReady', layerObj.id)
+
             layerObj.getInfo = function(feature, info, legend_key_obj) {
                 var value = ""
                 if ('keys' in legend_key_obj) {
