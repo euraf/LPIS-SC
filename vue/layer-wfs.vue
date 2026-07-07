@@ -7,7 +7,9 @@ module.exports = {
         [
             "createSelectedFeature",
             "getFeatureProperty",
-            "generateLegendKey"
+            "generateLegendKey",
+            "getFullFarmActionState",
+            "selectFullFarmFromCurrentSelection"
         ].forEach((key) => {
             if (Object.prototype.hasOwnProperty.call(this.layer_props, key)) {
                 this.$delete(this.layer_props, key)
@@ -23,6 +25,7 @@ module.exports = {
         this.$set(this.layer_props, "olFormatType", 'GeoJSON')
         this.$set(this.layer_props, "eventResource", 'features')
         this.$set(this.layer_props, "isLoading", false)
+        this.$set(this.layer_props, "pendingFeatureLoads", 0)
         this.$set(this.layer_props, "bboxes", {
             bbox_5: { bboxLayer: null, bboxPixelsLayer: null, stats: {} },
             bbox_10: { bboxLayer: null, bboxPixelsLayer: null, stats: {} }
@@ -37,13 +40,29 @@ module.exports = {
     mounted() {
 
         this.source.on('change', () => {
-            if (this.source.getState() === 'ready' && this.source.getFeatures().length > 0) {
+            if (this.source.getState() === 'ready' && this.pendingFeatureLoads === 0) {
                 this.$set(this, "isLoading", false);
             }
         });
+
+        this.source.on(this.eventResource + 'loadstart', () => {
+            this.pendingFeatureLoads += 1;
+            this.$set(this, "isLoading", true);
+        });
         
         this.source.on(this.eventResource + 'loadend', () => {
+            this.pendingFeatureLoads = Math.max(0, this.pendingFeatureLoads - 1);
+            if (this.pendingFeatureLoads === 0) {
+                this.$set(this, "isLoading", false);
+            }
             this.syncSelectedFeaturesFromRoute();
+        });
+
+        this.source.on(this.eventResource + 'loaderror', () => {
+            this.pendingFeatureLoads = Math.max(0, this.pendingFeatureLoads - 1);
+            if (this.pendingFeatureLoads === 0) {
+                this.$set(this, "isLoading", false);
+            }
         });
 
         this.$nextTick(() => {
@@ -553,7 +572,6 @@ module.exports = {
             return null;
         },
         getFullFarmActionState() {
-            debugger
             const context = this.getFarmActionContext();
             if (!context) {
                 return { available: false, isFull: false, farmId: null };

@@ -168,13 +168,13 @@ var layer_mixin = {
 
             layerObj.generateLegendKey = layerVue.generateLegendKey
 
-            if (typeof layerVue.selectFullFarmFromCurrentSelection === 'function') {
+            if (typeof layerVue.selectFullFarmFromCurrentSelection === 'function' && typeof layerObj.selectFullFarmFromCurrentSelection !== 'function') {
                 layerObj.selectFullFarmFromCurrentSelection = function() {
                     return layerVue.selectFullFarmFromCurrentSelection()
                 }
             }
 
-            if (typeof layerVue.getFullFarmActionState === 'function') {
+            if (typeof layerVue.getFullFarmActionState === 'function' && typeof layerObj.getFullFarmActionState !== 'function') {
                 layerObj.getFullFarmActionState = function() {
                     return layerVue.getFullFarmActionState()
                 }
