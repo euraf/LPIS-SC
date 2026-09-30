@@ -45,6 +45,8 @@ httpVueLoader.register(Vue, 'vue/accordion/ForestCoverPanel.vue');
 httpVueLoader.register(Vue, 'vue/accordion/WoodyVegetationPanel.vue');
 httpVueLoader.register(Vue, 'vue/accordion/LulcPanel.vue');
 httpVueLoader.register(Vue, 'vue/accordion/PolicyLulcPanel.vue');
+httpVueLoader.register(Vue, 'vue/compass/CompassLayerPanel.vue');
+httpVueLoader.register(Vue, 'vue/compass/CompassInsightsPanel.vue');
 httpVueLoader.register(Vue, 'vue/shared/LulcPieChart.vue');
 httpVueLoader.register(Vue, 'vue/shared/LayerInfoModal.vue');
 

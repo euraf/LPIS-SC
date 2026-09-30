@@ -103,6 +103,22 @@ module.exports = {
 				return [];
 			},
 		},
+		mapInstance: {
+			type: Object,
+			default: null,
+		},
+		layers: {
+			type: Object,
+			default: function() { return {}; },
+		},
+		adminBoundaryLayers: {
+			type: Object,
+			default: function() { return {}; },
+		},
+		nutsLauHierarchy: {
+			type: Object,
+			default: function() { return {}; },
+		},
 		anySelectedFeature: {
 			type: Boolean,
 			required: true
@@ -179,16 +195,7 @@ module.exports = {
 	},
 	computed: {
 		map() {
-			return this.$parent.$data.map
-		},
-		layers() {
-			return this.$parent.$data.layers
-		},
-		adminBoundaryLayers() {
-			return this.$parent.$data.adminBoundaryLayers || {};
-		},
-		nutsLauHierarchy() {
-			return this.$parent.$data.nutsLauHierarchy || {};
+			return this.mapInstance
 		},
 		lulcLpisNote() {
 			const all = this.selectedFeaturesAll;

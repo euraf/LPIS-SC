@@ -5,7 +5,7 @@
 				<div class="compass-branding">
 					<div class="brand-mark compass-brand-mark">
 						<span class="brand-ring"><i class="fa fa-compass"></i></span>
-						<span class="brand-copy">LPIS-SC</span>
+						<span class="brand-copy"><a href="#" @click.prevent="goToLandingSection('about')">LPIS Sustainability Compass</a></span>
 					</div>
 					<label class="compass-title-select-shell mb-0" for="profile-select">
 						<select
@@ -35,326 +35,18 @@
 			</header>
 
 			<section class="farmer-layout" :class="{ 'policy-layout': isPolicyMaker }">
-				<aside class="farm-left-panel" :class="{ 'policy-layers-panel': isPolicyMaker }">
-					<div class="panel-title-row">
-						<h3>Data Layers</h3>
-						<span>{{ profileTitle }} Mode</span>
-					</div>
-					<div class="indicator-accordion layer-accordion">
-						<div
-							class="accordion-section"
-							v-if="Object.keys(lpisLayers).length"
-							:class="{ 'is-open': leftLayerAccordion.lpis }"
-						>
-							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('lpis')">
-								<span class="accordion-icon">🌾</span>
-								<span class="accordion-title">LPIS Layers</span>
-								<span class="accordion-chevron">
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</button>
-							<div class="accordion-body">
-								<div class="layer-group layer-group--accordion">
-									<ul>
-										<li v-for="layer in lpisLayers" :key="layer.id">
-											<span
-												class="flag"
-												:class="'flag-' + layer.country_code.toLowerCase()"
-												:aria-label="layer.country_code"
-											></span>
-											<component :is="layer.type === 'MVT' ? 'layer-mvt' : 'layer-wfs'" :layer_id="layer.id" :layer_props="layer"></component>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.indicator }">
-							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('indicator')">
-								<span class="accordion-icon">📊</span>
-								<span class="accordion-title">Indicator Layers</span>
-								<span class="accordion-chevron">
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</button>
-							<div class="accordion-body">
-								<div class="layer-group layer-group--accordion">
-									<ul>
-										<li v-if="layers['tree_cover_density_2021']">
-											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
-											<layer-wms :layer_id="'tree_cover_density_2021'" :layer_props="layers['tree_cover_density_2021']"></layer-wms>
-										</li>
-										<li v-if="layers['jrc_gfc_2020_v2']">
-											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
-											<layer-wms :layer_id="'jrc_gfc_2020_v2'" :layer_props="layers['jrc_gfc_2020_v2']"></layer-wms>
-										</li>
-										<li v-if="layers['woody_vegetation_layer_2021']">
-											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
-											<layer-wms :layer_id="'woody_vegetation_layer_2021'" :layer_props="layers['woody_vegetation_layer_2021']"></layer-wms>
-										</li>
-										<li v-if="layers['small_woody_features_2021']">
-											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-tree"></i></span>
-											<layer-wms :layer_id="'small_woody_features_2021'" :layer_props="layers['small_woody_features_2021']"></layer-wms>
-										</li>
-										<li v-if="layers['clc_2018']">
-											<span class="layer-symbol" aria-hidden="true"><i class="fa-solid fa-map"></i></span>
-											<layer-wms :layer_id="'clc_2018'" :layer_props="layers['clc_2018']"></layer-wms>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.orthophoto }">
-							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('orthophoto')">
-								<span class="accordion-icon">🛰️</span>
-								<span class="accordion-title">Orthophoto Layers</span>
-								<span class="accordion-chevron">
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</button>
-							<div class="accordion-body">
-								<div class="layer-group layer-group--accordion">
-									<ul>
-										<li v-for="layer in orthophotoLayers" :key="layer.id">
-											<span
-												class="flag"
-												:class="'flag-' + layer.country_code.toLowerCase()"
-												:aria-label="layer.country_code"
-											></span>
-											<component
-												:is="layer.type === 'tileXYZ' ? 'layer-tilexyz' : 'layer-wms'"
-												:layer_id="layer.id"
-												:layer_props="layer"
-											></component>
-										</li>
-										<li>
-											<span><i class="fa-solid fa-earth-europe"></i></span>
-											<div class="form-check">
-												<input
-													id="orthophoto-world-imagery"
-													class="form-check-input"
-													type="checkbox"
-													:checked="activeBasemap === 'imagery'"
-													@change="setOrthophotoBasemap($event.target.checked)"
-												>
-												<label class="form-check-label" for="orthophoto-world-imagery">World Imagery (Esri)</label>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<div class="accordion-section" :class="{ 'is-open': leftLayerAccordion.administrative }">
-							<button class="accordion-header" type="button" @click="toggleLeftLayerAccordion('administrative')">
-								<span class="accordion-icon">🧭</span>
-								<span class="accordion-title">Administrative Layers</span>
-								<span class="accordion-chevron">
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</button>
-							<div class="accordion-body">
-								<div class="layer-group layer-group--accordion">
-									<ul>
-										<li>
-											<span class="layer-dot" style="background-color: rgba(50,50,50,0.9)"></span>
-											<span class="layer-label">NUTS1 <small>(zoom ≥ 5)</small></span>
-										</li>
-										<li>
-											<span class="layer-dot" style="background-color: rgba(60,60,60,0.75)"></span>
-											<span class="layer-label">NUTS2 <small>(zoom ≥ 7)</small></span>
-										</li>
-										<li>
-											<span class="layer-dot" style="background-color: rgba(80,80,80,0.6)"></span>
-											<span class="layer-label">NUTS3 <small>(zoom ≥ 9)</small></span>
-										</li>
-										<li>
-											<span class="layer-dot" style="background-color: rgba(100,100,100,0.5)"></span>
-											<span class="layer-label">LAU <small>(zoom ≥ 11)</small></span>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</aside>
-				<aside class="farm-right-panel policy-insights-panel" v-if="isPolicyMaker">
-						<div class="panel-title-row">
-							<h3>{{ subjectTitle }}</h3>
-							<span>{{ profileTitle }} Mode</span>
-						</div>
-						<div class="policy-picker-shell">
-							<div class="policy-breadcrumb" v-if="policyBreadcrumbParts.length">
-								<span
-									v-for="(part, idx) in policyBreadcrumbParts"
-									:key="part.level"
-									class="policy-breadcrumb-part"
-								>
-									<span v-if="idx > 0" class="policy-breadcrumb-sep">&gt;</span>
-									<span>{{ part.label }}</span>
-								</span>
-							</div>
-							<div class="policy-picker-grid">
-								<label>
-									{{ policyPickerLabel }}
-									<select v-model="policyPickerValue" @change="onPolicySelectionChange(policyPickerLevel)">
-										<option value="">Select {{ policyPickerLabel }}</option>
-										<option v-for="item in policyPickerOptions" :key="item.id" :value="item.id">{{ item.label }}</option>
-									</select>
-								</label>
-							</div>
-							<div class="policy-picker-actions mt-2">
-								<button
-									type="button"
-									class="tour-button"
-									:disabled="!policyCanShowStats"
-									@click="showPolicyStats"
-								>
-									Show {{ policyPickerLabel }} stats
-								</button>
-								<!-- needs further work button
-									type="button"
-									class="tour-button"
-									v-if="policyCanStartCompare"
-									@click="startPolicyCompare"
-								>
-									Compare to other region
-								</button-->
-								<button
-									type="button"
-									class="tour-button"
-									v-if="policyNextLevel"
-									:disabled="!policyCanGoNext"
-									@click="goToNextPolicyLevel"
-								>
-									Select {{ policyNextLevelLabel }}
-								</button>
-								<button
-									type="button"
-									class="tour-button"
-									v-if="policyPreviousLevel"
-									@click="goToPreviousPolicyLevel"
-								>
-									Back to {{ policyPreviousLevelLabel }}
-								</button>
-							</div>
-							<div v-if="policyCompareEnabled" class="policy-compare-shell mt-3">
-								<div class="policy-breadcrumb" v-if="policyCompareBreadcrumbParts.length">
-									<span
-										v-for="(part, idx) in policyCompareBreadcrumbParts"
-										:key="`compare-${part.level}`"
-										class="policy-breadcrumb-part"
-									>
-										<span v-if="idx > 0" class="policy-breadcrumb-sep">&gt;</span>
-										<span>{{ part.label }}</span>
-									</span>
-								</div>
-								<div class="policy-picker-grid">
-									<label>
-										Compare {{ policyComparePickerLabel }}
-										<select v-model="policyComparePickerValue" @change="onPolicyCompareSelectionChange(policyComparePickerLevel)">
-											<option value="">Select {{ policyComparePickerLabel }}</option>
-											<option v-for="item in policyComparePickerOptions" :key="`compare-${item.id}`" :value="item.id">{{ item.label }}</option>
-										</select>
-									</label>
-								</div>
-								<div class="policy-picker-actions mt-2">
-									<!-- needs further work button
-										type="button"
-										class="tour-button"
-										:disabled="!policyCompareCanShow"
-										@click="showPolicyComparison"
-									>
-										Show comparison
-									</button-->
-									<button
-										type="button"
-										class="tour-button"
-										v-if="policyCompareNextLevel"
-										:disabled="!policyCompareCanGoNext"
-										@click="goToNextPolicyCompareLevel"
-									>
-										Select {{ policyCompareNextLevelLabel }}
-									</button>
-									<button
-										type="button"
-										class="tour-button"
-										v-if="policyComparePreviousLevel"
-										@click="goToPreviousPolicyCompareLevel"
-									>
-										Back to {{ policyComparePreviousLevelLabel }}
-									</button>
-								</div>
-							</div>
-						</div>
-
-						<div class="indicator-accordion">
-							<div
-								class="accordion-section"
-								v-for="category in policyIndicatorCategories"
-								:key="category.id"
-								:class="{ 'is-open': category.open }"
-							>
-								<button class="accordion-header" type="button" @click="toggleCategory(category.id)">
-									<span class="accordion-icon">{{ category.icon }}</span>
-									<span class="accordion-title">{{ category.title }}</span>
-									<span class="accordion-chevron">
-										<i class="fa fa-chevron-down"></i>
-									</span>
-								</button>
-
-								<div class="accordion-body tcd-panel" v-if="category.id === 'treecover'">
-									<tcd-panel
-										:opening="category.open"
-										mode="policymaker"
-										:any-selected-feature="anySelectedFeature"
-										:selected-features-all="selectedFeaturesAll"
-										:nuts-lau-hierarchy="nutsLauHierarchy"
-										:policy-stats-level="policyStatsLevel"
-										:policy-selection="policySelection"
-									/>
-								</div>
-
-								<div class="accordion-body tcd-panel" v-if="category.id === 'forestcover'">
-									<forest-cover-panel
-										:opening="category.open"
-										mode="policymaker"
-										:any-selected-feature="anySelectedFeature"
-										:selected-features-all="selectedFeaturesAll"
-										:nuts-lau-hierarchy="nutsLauHierarchy"
-										:policy-stats-level="policyStatsLevel"
-										:policy-selection="policySelection"
-									/>
-								</div>
-
-								<div class="accordion-body tcd-panel" v-if="category.id === 'woodyvegetation'">
-									<woody-vegetation-panel
-										:opening="category.open"
-										mode="policymaker"
-										:any-selected-feature="anySelectedFeature"
-										:selected-features-all="selectedFeaturesAll"
-										:nuts-lau-hierarchy="nutsLauHierarchy"
-										:policy-stats-level="policyStatsLevel"
-										:policy-selection="policySelection"
-									/>
-								</div>
-
-								<div class="accordion-body lulc-panel" v-if="category.id === 'lulc'">
-									<policy-lulc-panel
-										:opening="category.open"
-										:layers="layers"
-										:nuts-lau-hierarchy="nutsLauHierarchy"
-										:policy-stats-level="policyStatsLevel"
-										:policy-selection="policySelection"
-										:policy-compare-stats-level="policyCompareStatsLevel"
-										:policy-compare-selection="policyCompareSelection"
-									/>
-								</div>
-
-							</div>
-						</div>
-				</aside>
+				<compass-layer-panel
+					:profile-title="profileTitle"
+					:is-policy-maker="isPolicyMaker"
+					:layers="layers"
+					:lpis-layers="lpisLayers"
+					:orthophoto-layers="orthophotoLayers"
+					:map-instance="map"
+					:left-layer-accordion="leftLayerAccordion"
+					:active-basemap="activeBasemap"
+					@toggle-left-layer-accordion="toggleLeftLayerAccordion"
+					@set-orthophoto-basemap="setOrthophotoBasemap"
+				></compass-layer-panel>
 
 				<div class="farm-map-stage">
 					<div class="basemap-switcher" v-if="basemapOptions.length">
@@ -376,88 +68,32 @@
 					</div>
 				</div>
 
-				<aside v-if="isFarmer || isResearcher" class="farm-right-panel">
-					<div class="panel-title-row">
-						<h3>{{ subjectTitle }}</h3>
-						<span>{{ subjectId }}</span>
-					</div>
-					<div v-if="isFarmer" class="mt-2">
-						<button
-							type="button"
-							class="tour-button"
-							:disabled="!fullFarmAction.available"
-							:title="fullFarmAction.available ? '' : fullFarmAction.disabledHint"
-							@click="onSelectFullFarmClick"
-						>{{ fullFarmAction.available
-							? (fullFarmAction.isFull ? 'Full farm retrieved' : 'Select full farm')
-							: fullFarmAction.disabledLabel }}</button>
-					</div>
-
-					<div class="indicator-accordion">
-						<div
-							class="accordion-section"
-							v-for="category in indicatorCategories"
-							:key="category.id"
-							:class="{ 'is-open': category.open }"
-						>
-							<button class="accordion-header" type="button" @click="toggleCategory(category.id)">
-								<span class="accordion-icon">{{ category.icon }}</span>
-								<span class="accordion-title">{{ category.title }}</span>
-								<span class="accordion-chevron">
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</button>
-
-							<div class="accordion-body" v-if="category.id === 'parcel'">
-								<parcel-overview-panel
-									:opening="category.open"
-									:any-selected-feature="anySelectedFeature"
-									:selected-features-all="selectedFeaturesAll"
-									:layers="layers"
-									:admin-boundary-layers="adminBoundaryLayers"
-									:nuts-lau-hierarchy="nutsLauHierarchy"
-								/>
-							</div>
-
-							<div class="accordion-body tcd-panel" v-if="category.id === 'treecover'">
-								<tcd-panel
-									:opening="category.open"
-									mode="farmer"
-									:any-selected-feature="anySelectedFeature"
-									:selected-features-all="selectedFeaturesAll"
-								/>
-							</div>
-
-							<div class="accordion-body tcd-panel" v-if="category.id === 'forestcover'">
-								<forest-cover-panel
-									:opening="category.open"
-									mode="farmer"
-									:any-selected-feature="anySelectedFeature"
-									:selected-features-all="selectedFeaturesAll"
-								/>
-							</div>
-
-							<div class="accordion-body tcd-panel" v-if="category.id === 'woodyvegetation'">
-								<woody-vegetation-panel
-									:opening="category.open"
-									mode="farmer"
-									:any-selected-feature="anySelectedFeature"
-									:selected-features-all="selectedFeaturesAll"
-								/>
-							</div>
-
-							<div class="accordion-body lulc-panel" v-if="category.id === 'lulc'">
-								<lulc-panel
-									:opening="category.open"
-									:any-selected-feature="anySelectedFeature"
-									:selected-features-all="selectedFeaturesAll"
-									:layers="layers"
-								/>
-							</div>
-
-						</div>
-					</div>
-				</aside>
+				<compass-insights-panel
+					:is-policy-maker="isPolicyMaker"
+					:is-farmer="isFarmer"
+					:is-researcher="isResearcher"
+					:profile-title="profileTitle"
+					:subject-title="subjectTitle"
+					:subject-id="subjectId"
+					:full-farm-action="fullFarmAction"
+					:policy="policyPanelState"
+					:indicator-categories="isPolicyMaker ? policyIndicatorCategories : indicatorCategories"
+					:any-selected-feature="anySelectedFeature"
+					:selected-features-all="selectedFeaturesAll"
+					:layers="layers"
+					:map-instance="map"
+					:admin-boundary-layers="adminBoundaryLayers"
+					:nuts-lau-hierarchy="nutsLauHierarchy"
+					@policy-selection-change="onPolicyPickerSelectionChange"
+					@policy-compare-selection-change="onPolicyComparePickerSelectionChange"
+					@show-policy-stats="showPolicyStats"
+					@go-to-next-policy-level="goToNextPolicyLevel"
+					@go-to-previous-policy-level="goToPreviousPolicyLevel"
+					@go-to-next-policy-compare-level="goToNextPolicyCompareLevel"
+					@go-to-previous-policy-compare-level="goToPreviousPolicyCompareLevel"
+					@toggle-category="toggleCategory"
+					@select-full-farm="onSelectFullFarmClick"
+				></compass-insights-panel>
 			</section>
 
 			<footer class="compass-footer-note">
@@ -864,6 +500,36 @@ module.exports = {
 		policyIndicatorCategories() {
 			return this.indicatorCategories.filter((category) => category.id !== "parcel");
 		},
+		policyPanelState() {
+			return {
+				breadcrumbParts: this.policyBreadcrumbParts,
+				pickerLabel: this.policyPickerLabel,
+				pickerLevel: this.policyPickerLevel,
+				pickerValue: this.policyPickerValue,
+				pickerOptions: this.policyPickerOptions,
+				canShowStats: this.policyCanShowStats,
+				nextLevel: this.policyNextLevel,
+				nextLevelLabel: this.policyNextLevelLabel,
+				canGoNext: this.policyCanGoNext,
+				previousLevel: this.policyPreviousLevel,
+				previousLevelLabel: this.policyPreviousLevelLabel,
+				compareEnabled: this.policyCompareEnabled,
+				compareBreadcrumbParts: this.policyCompareBreadcrumbParts,
+				comparePickerLabel: this.policyComparePickerLabel,
+				comparePickerLevel: this.policyComparePickerLevel,
+				comparePickerValue: this.policyComparePickerValue,
+				comparePickerOptions: this.policyComparePickerOptions,
+				compareNextLevel: this.policyCompareNextLevel,
+				compareNextLevelLabel: this.policyCompareNextLevelLabel,
+				compareCanGoNext: this.policyCompareCanGoNext,
+				comparePreviousLevel: this.policyComparePreviousLevel,
+				comparePreviousLevelLabel: this.policyComparePreviousLevelLabel,
+				statsLevel: this.policyStatsLevel,
+				selection: this.policySelection,
+				compareStatsLevel: this.policyCompareStatsLevel,
+				compareSelection: this.policyCompareSelection,
+			};
+		},
 		policyCountryOptions() {
 			if (!this.nutsLauHierarchy || !this.nutsLauHierarchy.nuts0) {
 				return [];
@@ -974,7 +640,7 @@ module.exports = {
 		},
 		subjectId() {
 			if (this.activeProfile === "researcher") {
-				return ; //TODO
+				return ""; //TODO
 			}
 			if (this.activeProfile === "policymaker") {
 				if (!this.policyStatsLevel) {
@@ -1670,6 +1336,11 @@ module.exports = {
 				this.loadPolicyNamesForCurrentSelection("lau");
 			}
 		},
+		onPolicyPickerSelectionChange(change) {
+			if (!change || !this.policyLevelOrder.includes(change.level)) return;
+			this.$set(this.policySelection, change.level, change.value || "");
+			this.onPolicySelectionChange(change.level);
+		},
 		onPolicyCompareSelectionChange(level) {
 			this.policyComparePickerLevel = level;
 			this.policyCompareStatsLevel = "";
@@ -1695,6 +1366,11 @@ module.exports = {
 				this.policyCompareSelection.lau = "";
 				this.loadPolicyNamesForCurrentSelection("lau", this.policyCompareSelection);
 			}
+		},
+		onPolicyComparePickerSelectionChange(change) {
+			if (!change || !this.policyCompareLevelOrder.includes(change.level)) return;
+			this.$set(this.policyCompareSelection, change.level, change.value || "");
+			this.onPolicyCompareSelectionChange(change.level);
 		},
 		buildPolicyOptionLabel(id, name) {
 			if (!name || String(name).trim() === "") {

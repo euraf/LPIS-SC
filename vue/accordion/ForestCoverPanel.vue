@@ -104,6 +104,14 @@ module.exports = {
 				return [];
 			},
 		},
+		mapInstance: {
+			type: Object,
+			default: null,
+		},
+		layers: {
+			type: Object,
+			default: function() { return {}; },
+		},
 		nutsLauHierarchy: {
 			type: Object,
 			default: function() {
@@ -208,11 +216,8 @@ module.exports = {
 			}
 			return "Select a parcel on the map to calculate.";
 		},
-		layers() {
-			return this.$parent.$data.layers;
-		},
 		map() {
-			return this.$parent.$data.map;
+			return this.mapInstance;
 		},
 		policyParcelLayer() {
 			const country = String((this.policySelection && this.policySelection.country) || '').toUpperCase();

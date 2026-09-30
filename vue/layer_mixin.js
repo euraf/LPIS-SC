@@ -1,8 +1,14 @@
 var layer_mixin = {
     // avoid using data() {...} in mixins because references get lost when merging with components own data objects
+    props: {
+        mapInstance: {
+            type: Object,
+            default: null,
+        },
+    },
     computed: {
         map() {
-            return this.$parent.$data.map
+            return this.mapInstance
         },
         source() {
             return this.layer?.getSource()
@@ -42,6 +48,7 @@ var layer_mixin = {
             if (this.short_description) {
                 return String(this.short_description).trim()
             }
+            console.info(this.layer_id + " missing metadata (short_description).")
             return 'Metadata for this layer is still being completed.'
         },
         originOfficialWebsite() {

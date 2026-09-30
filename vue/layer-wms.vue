@@ -4,6 +4,15 @@ module.exports = {
     mixins: [ layer_mixin ],
     props: [ 'layer_id', 'layer_props' ],
 	data() {
+        [
+            "createSelectedFeature",
+            "getFeatureProperty",
+            "generateLegendKey"
+        ].forEach((key) => {
+            if (Object.prototype.hasOwnProperty.call(this.layer_props, key)) {
+                this.$delete(this.layer_props, key)
+            }
+        })
         this.$set(this.layer_props, "layer", null)
         this.$set(this.layer_props, "lastCalledURL", null)
         this.$set(this.layer_props, "selectedFeatures", [])
