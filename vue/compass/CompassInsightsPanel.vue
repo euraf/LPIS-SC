@@ -1,8 +1,11 @@
 <template>
-	<aside v-if="isPolicyMaker" class="farm-right-panel policy-insights-panel">
+	<aside v-if="isPolicyMaker" class="farm-right-panel policy-insights-panel" :class="{ 'is-mobile-open': mobileOpen }" :aria-hidden="mobileOpen ? 'false' : null">
 		<div class="panel-title-row">
 			<h3>{{ subjectTitle }}</h3>
 			<span>{{ profileTitle }} Mode</span>
+			<button class="mobile-panel-close" type="button" aria-label="Close insights panel" @click="$emit('close-mobile-panel')">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
 		</div>
 		<div class="policy-picker-shell">
 			<div class="policy-breadcrumb" v-if="policy.breadcrumbParts.length">
@@ -166,10 +169,13 @@
 		</div>
 	</aside>
 
-	<aside v-else-if="isFarmer || isResearcher" class="farm-right-panel">
+	<aside v-else-if="isFarmer || isResearcher" class="farm-right-panel" :class="{ 'is-mobile-open': mobileOpen }" :aria-hidden="mobileOpen ? 'false' : null">
 		<div class="panel-title-row">
 			<h3>{{ subjectTitle }}</h3>
 			<span>{{ subjectId }}</span>
+			<button class="mobile-panel-close" type="button" aria-label="Close insights panel" @click="$emit('close-mobile-panel')">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
 		</div>
 		<div v-if="isFarmer" class="mt-2">
 			<button
@@ -261,6 +267,10 @@
 <script>
 module.exports = {
 	props: {
+		mobileOpen: {
+			type: Boolean,
+			default: false,
+		},
 		isPolicyMaker: {
 			type: Boolean,
 			default: false,

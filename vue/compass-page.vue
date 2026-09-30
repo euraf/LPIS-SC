@@ -36,6 +36,7 @@
 
 			<section class="farmer-layout" :class="{ 'policy-layout': isPolicyMaker }">
 				<compass-layer-panel
+					:mobile-open="mobilePanelOpen === 'layers'"
 					:profile-title="profileTitle"
 					:is-policy-maker="isPolicyMaker"
 					:layers="layers"
@@ -46,6 +47,7 @@
 					:active-basemap="activeBasemap"
 					@toggle-left-layer-accordion="toggleLeftLayerAccordion"
 					@set-orthophoto-basemap="setOrthophotoBasemap"
+					@close-mobile-panel="closeMobilePanel"
 				></compass-layer-panel>
 
 				<div class="farm-map-stage">
@@ -67,8 +69,32 @@
 						</div>
 					</div>
 				</div>
+				<button
+					v-if="mobilePanelOpen"
+					class="mobile-panel-backdrop"
+					type="button"
+					aria-label="Close open panel"
+					@click="closeMobilePanel"
+				></button>
+				<div class="mobile-panel-tabs" aria-label="Map panels">
+					<button
+					class="mobile-panel-tab mobile-panel-tab-left"
+					type="button"
+					:aria-expanded="mobilePanelOpen === 'layers' ? 'true' : 'false'"
+					@click="toggleMobilePanel('layers')"
+					:title="mobilePanelOpen === 'layers' ? 'Close layers panel' : 'Open layers panel'"
+					><i class="fa fa-layer-group" aria-hidden="true"></i><span>Layers</span></button>
+					<button
+					class="mobile-panel-tab mobile-panel-tab-right"
+					type="button"
+					:aria-expanded="mobilePanelOpen === 'insights' ? 'true' : 'false'"
+					@click="toggleMobilePanel('insights')"
+					:title="mobilePanelOpen === 'insights' ? 'Close insights panel' : 'Open insights panel'"
+					><i class="fa fa-chart-column" aria-hidden="true"></i><span>Insights</span></button>
+				</div>
 
 				<compass-insights-panel
+					:mobile-open="mobilePanelOpen === 'insights'"
 					:is-policy-maker="isPolicyMaker"
 					:is-farmer="isFarmer"
 					:is-researcher="isResearcher"
@@ -93,6 +119,7 @@
 					@go-to-previous-policy-compare-level="goToPreviousPolicyCompareLevel"
 					@toggle-category="toggleCategory"
 					@select-full-farm="onSelectFullFarmClick"
+					@close-mobile-panel="closeMobilePanel"
 				></compass-insights-panel>
 			</section>
 
@@ -100,15 +127,17 @@
 				<!--a class="footer-latest-button" href="#" @click.prevent="goToLandingSection('latest-improvements')">
 					Latest improvements
 				</a-->
-				<div class="compass-footer-partner">
-					<a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer"><img src="img/mvarc_logo.png" alt="MVARC agroecology" class="compass-footer-partner-logo" /></a>
+				<div class="compass-footer-logos">
+					<div class="compass-footer-partner">
+						<a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer"><img src="img/mvarc_logo.png" alt="MVARC agroecology" class="compass-footer-partner-logo" /></a>
+					</div>
+					<div class="compass-footer-partner">
+						<a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer"><img src="img/logoDigitAF_HR_horiz.png" alt="DigitAF" class="compass-footer-partner-logo" /></a>
+					</div>
 				</div>
 				<p class="compass-funding-note">
-					The technical implementation of this tool is led by <a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer">MVARC</a> within the EU project <a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer">DigitAF</a> (Grant agreement n° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
+					Built by <a href="https://mvarc.eu/" target="_blank">MVARC</a> for the EU-funded <a href="https://digitaf.eu/" target="_blank">DigitAF</a> project.
 				</p>
-				<div class="compass-footer-partner">
-					<a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer"><img src="img/logoDigitAF_HR_horiz.png" alt="DigitAF" class="compass-footer-partner-logo" /></a>
-				</div>
 			</footer>
 		</div>
 	</div>
@@ -122,6 +151,7 @@ module.exports = {
             map: null,
 			currentMapZoom: null,
 			showAttribution: false,
+			mobilePanelOpen: null,
 			countriesLayer: null,
 			visibleCountries: [],
 			baseLayers: {},
@@ -254,12 +284,14 @@ module.exports = {
 		};
 		VueBus.$on('layerApiReady', this.onLayerApiReadyHandler);
 		window.addEventListener("resize", this.refreshMapSize);
+		window.addEventListener("keydown", this.handleMobilePanelKeydown);
 	},
 	beforeDestroy() {
 		if (this.onLayerApiReadyHandler) {
 			VueBus.$off('layerApiReady', this.onLayerApiReadyHandler);
 		}
 		window.removeEventListener("resize", this.refreshMapSize);
+		window.removeEventListener("keydown", this.handleMobilePanelKeydown);
 	},
 	watch: {
 		visibleCountries() {
@@ -1903,6 +1935,17 @@ module.exports = {
 				return;
 			}
 			this.$set(this.leftLayerAccordion, section, !this.leftLayerAccordion[section]);
+		},
+		toggleMobilePanel(panel) {
+			this.mobilePanelOpen = this.mobilePanelOpen === panel ? null : panel;
+		},
+		closeMobilePanel() {
+			this.mobilePanelOpen = null;
+		},
+		handleMobilePanelKeydown(event) {
+			if (event.key === "Escape") {
+				this.closeMobilePanel();
+			}
 		},
 		setOrthophotoBasemap(enabled) {
 			this.applyBasemap(enabled ? 'imagery' : 'osm');

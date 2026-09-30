@@ -1,8 +1,15 @@
 <template>
-	<aside class="farm-left-panel" :class="{ 'policy-layers-panel': isPolicyMaker }">
+	<aside
+		class="farm-left-panel"
+		:class="{ 'policy-layers-panel': isPolicyMaker, 'is-mobile-open': mobileOpen }"
+		:aria-hidden="mobileOpen ? 'false' : null"
+	>
 		<div class="panel-title-row">
 			<h3>Data Layers</h3>
 			<span>{{ profileTitle }} Mode</span>
+			<button class="mobile-panel-close" type="button" aria-label="Close layers panel" @click="$emit('close-mobile-panel')">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
 		</div>
 		<div class="indicator-accordion layer-accordion">
 			<div
@@ -154,6 +161,10 @@
 <script>
 module.exports = {
 	props: {
+		mobileOpen: {
+			type: Boolean,
+			default: false,
+		},
 		profileTitle: {
 			type: String,
 			required: true,
