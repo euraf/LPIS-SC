@@ -22,6 +22,11 @@ module.exports = {
         this.$set(this.layer_props, "eventResource", 'tile')
         this.$set(this.layer_props, "isLoading", false)
         this.$set(this.layer_props, "tilesLoading", 0)
+        this.$set(this.layer_props, "trackedLoadCount", 0)
+        this.$set(this.layer_props, "loadBatchFailures", 0)
+        this.$set(this.layer_props, "consecutiveLoadFailures", 0)
+        this.$set(this.layer_props, "loadFailureDetail", "")
+        this.$set(this.layer_props, "loadErrorMessage", null)
         this.$set(this.layer_props, "showLegend", false)
         this.$set(this.layer_props, "showFullLegend", false)
         
@@ -30,22 +35,16 @@ module.exports = {
     mounted() {
         
         this.source.on('tileloadstart', () => {
-            if (this.tilesLoading == 0) {
-                this.$set(this, 'isLoading', true);
-            }
             this.tilesLoading++;
+            this.trackLayerLoadStart();
         });
         this.source.on('tileloadend', () => {
-            this.tilesLoading--;
-            if (this.tilesLoading === 0) {
-                this.$set(this, 'isLoading', false);
-            }
+            this.tilesLoading = Math.max(0, this.tilesLoading - 1);
+            this.trackLayerLoadEnd(null, false);
         });
-        this.source.on('tileloaderror', () => {
-            this.tilesLoading--;
-            if (this.tilesLoading === 0) {
-                this.$set(this, 'isLoading', false);
-            }
+        this.source.on('tileloaderror', (event) => {
+            this.tilesLoading = Math.max(0, this.tilesLoading - 1);
+            this.trackLayerLoadEnd(event, true);
         });
 
         this.$nextTick(() => {
@@ -179,7 +178,7 @@ module.exports = {
             @click.stop="showLegend = !showLegend"
             :title="showLegend ? 'Hide legend' : 'Show legend'"
         ><i class="fa" :class="showLegend ? 'fa-chevron-up' : 'fa-chevron-down'"></i></button>
-        <div class="spinner-border" v-show="isLoading" role="status"><span class="sr-only">Loading...</span></div>
+        <layer-load-status :loading="isLoading" :error-message="loadErrorMessage" :layer-id="layer_id"></layer-load-status>
         <div class="layer-legend-inline" v-if="layer_legend && layer_legend.legend_elements && showLegend">
             <div class="legend-item" v-for="entry in displayedLegendEntries" :key="entry.key">
                 <span

@@ -26,6 +26,12 @@ module.exports = {
         this.$set(this.layer_props, "eventResource", 'features')
         this.$set(this.layer_props, "isLoading", false)
         this.$set(this.layer_props, "pendingFeatureLoads", 0)
+        this.$set(this.layer_props, "trackedLoadCount", 0)
+        this.$set(this.layer_props, "loadBatchFailures", 0)
+        this.$set(this.layer_props, "consecutiveLoadFailures", 0)
+        this.$set(this.layer_props, "loadFailureDetail", "")
+        this.$set(this.layer_props, "loadErrorMessage", null)
+        this.$set(this.layer_props, "lastLoadFailureDetail", "")
         this.$set(this.layer_props, "bboxes", {
             bbox_5: { bboxLayer: null, bboxPixelsLayer: null, stats: {} },
             bbox_10: { bboxLayer: null, bboxPixelsLayer: null, stats: {} }
@@ -47,22 +53,19 @@ module.exports = {
 
         this.source.on(this.eventResource + 'loadstart', () => {
             this.pendingFeatureLoads += 1;
-            this.$set(this, "isLoading", true);
+            this.trackLayerLoadStart();
         });
         
         this.source.on(this.eventResource + 'loadend', () => {
             this.pendingFeatureLoads = Math.max(0, this.pendingFeatureLoads - 1);
-            if (this.pendingFeatureLoads === 0) {
-                this.$set(this, "isLoading", false);
-            }
+            this.trackLayerLoadEnd(null, false);
             this.syncSelectedFeaturesFromRoute();
         });
 
-        this.source.on(this.eventResource + 'loaderror', () => {
+        this.source.on(this.eventResource + 'loaderror', (event) => {
             this.pendingFeatureLoads = Math.max(0, this.pendingFeatureLoads - 1);
-            if (this.pendingFeatureLoads === 0) {
-                this.$set(this, "isLoading", false);
-            }
+            this.trackLayerLoadEnd(event, true, this.lastLoadFailureDetail);
+            this.lastLoadFailureDetail = "";
         });
 
         this.$nextTick(() => {
@@ -165,6 +168,7 @@ module.exports = {
 
                 xhr.onerror = function() {
                     _this.source.removeLoadedExtent(extent);
+                    _this.lastLoadFailureDetail = "Network error requesting the layer data. Check connectivity or service availability.";
                     failure();
                 };
 
@@ -184,6 +188,7 @@ module.exports = {
                         success(features);
                     } else {
                         _this.source.removeLoadedExtent(extent);
+                        _this.lastLoadFailureDetail = `HTTP ${xhr.status}${xhr.statusText ? ` ${xhr.statusText}` : ""} while requesting layer data.`;
                         failure();
                     }
                 }
@@ -693,7 +698,7 @@ module.exports = {
             @click.stop="showLegend = !showLegend"
             :title="showLegend ? 'Hide legend' : 'Show legend'"
         ><i class="fa" :class="showLegend ? 'fa-chevron-up' : 'fa-chevron-down'"></i></button>
-        <div class="spinner-border" v-show="isLoading" role="status"><span class="sr-only">Loading...</span></div>
+        <layer-load-status :loading="isLoading" :error-message="loadErrorMessage" :layer-id="layer_id"></layer-load-status>
         <div class="farm-prompt-backdrop" v-show="farmPrompt.show" @click.self="dismissFarmPrompt()">
             <div class="farm-prompt-card" role="dialog" aria-modal="true" aria-labelledby="farm-prompt-title">
                 <div class="farm-prompt-kicker">Farm selection</div>

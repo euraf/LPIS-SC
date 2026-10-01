@@ -166,6 +166,70 @@ var layer_mixin = {
         this.addClickListener()
     },
     methods: {
+        trackLayerLoadStart() {
+            if (this.trackedLoadCount === 0) {
+                this.loadBatchFailures = 0
+            }
+            this.trackedLoadCount += 1
+            this.isLoading = true
+        },
+        trackLayerLoadEnd(event, failed, detail) {
+            if (failed) {
+                this.loadBatchFailures += 1
+                this.consecutiveLoadFailures += 1
+                if (!this.loadFailureDetail) {
+                    this.loadFailureDetail = detail || this.getLayerLoadFailureDetail(event)
+                }
+            }
+
+            this.trackedLoadCount = Math.max(0, this.trackedLoadCount - 1)
+            if (this.trackedLoadCount > 0) return
+
+            this.isLoading = false
+            if (this.loadBatchFailures === 0) {
+                this.consecutiveLoadFailures = 0
+                this.loadFailureDetail = ""
+                this.loadErrorMessage = null
+            } else if (this.consecutiveLoadFailures >= 2) {
+                const layerName = this.name_en || this.name || this.layer_id
+                this.loadErrorMessage = `${layerName}: ${this.consecutiveLoadFailures} requests failed. ${this.loadFailureDetail || "The map service may be unavailable or rejecting requests."}`
+            }
+        },
+        getLayerLoadFailureDetail(event) {
+            const eventError = event && (event.error || event.message)
+            const eventTarget = event && event.target
+            const status = eventTarget && Number(eventTarget.status)
+            let message = typeof eventError === "string"
+                ? eventError
+                : eventError && typeof eventError.message === "string"
+                    ? eventError.message
+                    : ""
+            if (!message && status) {
+                message = `HTTP ${status}${eventTarget.statusText ? ` ${eventTarget.statusText}` : ""}`
+            }
+
+            let requestUrl = eventTarget && eventTarget.responseURL
+            const tile = event && event.tile
+            if (!requestUrl && tile && typeof tile.getImage === "function") {
+                const image = tile.getImage()
+                requestUrl = image && image.src
+            }
+            if (!requestUrl && typeof this.source_url === "string") {
+                requestUrl = this.source_url
+            }
+
+            let endpoint = ""
+            if (requestUrl) {
+                try {
+                    endpoint = new URL(requestUrl, window.location.href).host
+                } catch (error) {
+                    endpoint = ""
+                }
+            }
+
+            const detail = message ? String(message).replace(/\s+/g, " ").trim().slice(0, 180) : "The server did not return a readable map tile."
+            return endpoint ? `${detail} Source: ${endpoint}.` : detail
+        },
         setupLayerObjFunctions() {
 
             var layerObj = this.layer_props

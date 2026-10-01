@@ -49,6 +49,7 @@ httpVueLoader.register(Vue, 'vue/compass/CompassLayerPanel.vue');
 httpVueLoader.register(Vue, 'vue/compass/CompassInsightsPanel.vue');
 httpVueLoader.register(Vue, 'vue/shared/LulcPieChart.vue');
 httpVueLoader.register(Vue, 'vue/shared/LayerInfoModal.vue');
+httpVueLoader.register(Vue, 'vue/shared/LayerLoadStatus.vue');
 
 // ── Router ───────────────────────────────────────────────────────────────────
 const router = new VueRouter({
