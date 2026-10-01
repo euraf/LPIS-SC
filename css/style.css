@@ -1866,6 +1866,7 @@ body {
     font-size: 0.56rem;
     line-height: 1.2;
   }
+
 }
 
 .basemap-switcher {
@@ -2546,6 +2547,24 @@ body {
   color: var(--muted);
   font-size: 0.6rem;
   text-align: center;
+}
+
+.compass-funding-note-compact {
+  display: none;
+}
+
+.compass-funding-note-full {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .compass-funding-note-compact {
+    display: block;
+  }
+
+  .compass-funding-note-full {
+    display: none;
+  }
 }
 
 .footer-latest-button {
