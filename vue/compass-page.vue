@@ -134,13 +134,17 @@
 					<div class="compass-footer-partner">
 						<a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer"><img src="img/logoDigitAF_HR_horiz.png" alt="DigitAF" class="compass-footer-partner-logo" /></a>
 					</div>
+					<div class="compass-footer-partner compass-footer-eu-mobile">
+						<img src="img/eu_funded.jpg" alt="Funded by the European Union" class="compass-footer-partner-logo" />
+					</div>
 				</div>
 				<p class="compass-funding-note compass-funding-note-compact">
-					Built by <a href="https://mvarc.eu/" target="_blank">MVARC</a> for the EU-funded <a href="https://digitaf.eu/" target="_blank">DigitAF</a> project.
+					Built by <a href="https://mvarc.eu/" target="_blank">MVARC</a> for the EU-funded <a href="https://digitaf.eu/" target="_blank">DigitAF</a> project (GA 101059794).
 				</p>
 				<p class="compass-funding-note compass-funding-note-full">
 					The technical implementation of this tool is led by <a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer">MVARC</a> within the EU project <a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer">DigitAF</a> (Grant agreement n° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
 				</p>
+				<img src="img/eu_funded.jpg" alt="Funded by the European Union" class="compass-footer-eu-logo" />
 			</footer>
 		</div>
 	</div>

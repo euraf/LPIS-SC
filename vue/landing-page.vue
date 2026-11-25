@@ -173,7 +173,10 @@
 								The technical implementation of the <b>LPIS Sustainability Compass</b> is led by MVARC within the DigitAF project (Grant agreement n° 101059794),
 								funded by the European Union's Horizon Europe research and innovation programme.
 							</p>
-							<a class="digitaf-cta-button" href="https://digitaf.eu" target="_blank" rel="noopener noreferrer">Visit DigitAF</a>
+							<div class="digitaf-cta-row">
+								<a class="digitaf-cta-button" href="https://digitaf.eu" target="_blank" rel="noopener noreferrer">Visit DigitAF</a>
+								<img src="img/eu_funded.jpg" alt="Funded by the European Union" class="digitaf-cta-eu-logo" />
+							</div>
 						</div>
 						<a class="digitaf-logo-link" href="https://mvarc.eu" target="_blank" rel="noopener noreferrer" aria-label="MVARC website">
 							<img src="img/mvarc_logo_vert.png" alt="MVARC" class="digitaf-logo" />
@@ -218,6 +221,27 @@
 				</section>
 			</div>
 		</section>
+
+		<footer class="compass-footer-note landing-footer">
+					<div class="compass-footer-logos">
+						<div class="compass-footer-partner">
+							<a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer"><img src="img/mvarc_logo.png" alt="MVARC agroecology" class="compass-footer-partner-logo" /></a>
+						</div>
+						<div class="compass-footer-partner">
+							<a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer"><img src="img/logoDigitAF_HR_horiz.png" alt="DigitAF" class="compass-footer-partner-logo" /></a>
+						</div>
+						<div class="compass-footer-partner compass-footer-eu-mobile">
+							<img src="img/eu_funded.jpg" alt="Funded by the European Union" class="compass-footer-partner-logo" />
+						</div>
+					</div>
+					<p class="compass-funding-note compass-funding-note-compact">
+						Built by <a href="https://mvarc.eu/" target="_blank">MVARC</a> for the EU-funded <a href="https://digitaf.eu/" target="_blank">DigitAF</a> project.
+					</p>
+					<p class="compass-funding-note compass-funding-note-full">
+						The technical implementation of this tool is led by <a href="https://mvarc.eu/" target="_blank" rel="noopener noreferrer">MVARC</a> within the EU project <a href="https://digitaf.eu/" target="_blank" rel="noopener noreferrer">DigitAF</a> (Grant agreement n° 101059794), funded by the European Union’s Horizon Europe research and innovation programme.
+					</p>
+					<img src="img/eu_funded.jpg" alt="Funded by the European Union" class="compass-footer-eu-logo" />
+		</footer>
 
 		<div class="profile-overlay" v-if="profileOverlayOpen" @click.self="closeProfileOverlay">
 			<div class="profile-dialog" role="dialog" aria-modal="true" aria-label="Choose your profile">
